@@ -1,23 +1,29 @@
 import Typography from "typography"
-import Wordpress2016 from "typography-theme-wordpress-2016"
 
-Wordpress2016.overrideThemeStyles = () => {
-  return {
-    "a.gatsby-resp-image-link": {
-      boxShadow: `none`,
-    },
+const foxDoubtTheme = new Typography({
+  baseFontSize: '14px',
+  googleFonts: [{
+    name: 'Open Sans',
+    styles: ['300', '400', '400i', '800', '800i'],
+  }, 
+  {
+    name: 'Pacifico',
+    styles: ['400']
   }
-}
-
-delete Wordpress2016.googleFonts
-
-const typography = new Typography(Wordpress2016)
+],
+  headerFontFamily: ['Pacifico', 'cursive'],
+  headerColor: '#2f2f2f',
+  headerWeight: 'normal',
+  bodyFontFamily: ['Open Sans', 'sans-serif'],
+  bodyColor: '#2f2f2f',
+  boldWeight: '800'
+});
 
 // Hot reload typography in development.
 if (process.env.NODE_ENV !== `production`) {
-  typography.injectStyles()
+  foxDoubtTheme.injectStyles()
 }
 
-export default typography
-export const rhythm = typography.rhythm
-export const scale = typography.scale
+export default foxDoubtTheme;
+export const rhythm = foxDoubtTheme.rhythm;
+export const scale = foxDoubtTheme.scale;

@@ -1,3 +1,2 @@
-// custom typefaces
-import "typeface-montserrat"
-import "typeface-merriweather"
+// might want to import custom typefaces in case the CDN is slow once hosted
+
