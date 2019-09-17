@@ -7,6 +7,7 @@ $light-gray: #969696;
 $desert-sky-dusk: #0090c4;
 $desert-sand: #ffe599ff;
 $desert-white: #fcfafaff;
+$ice-blue: #0090c415;
 $foxdoubt-script: "Pacifico", cursive;
 $icon-width: 55px;
 $icon-height: 75px;
@@ -38,7 +39,6 @@ $desktop-width: 1024px;
   height: $icon-height;
   background-repeat: no-repeat;
   background-size: $background-size;
-  background-repeat: no-repeat;
   background-image: url("#{$url}");
 }
 
@@ -79,6 +79,10 @@ p {
 .card-white {
   background-color: $desert-white;
   min-height: $card-height;
+}
+
+.iceblue-container {
+  background-color: $ice-blue;
 }
 
 .align-self-flex-end {
@@ -193,11 +197,11 @@ p {
 
 
 .icon-cactus {
-  @include icon("https://cdn.glitch.com/305cb3bd-1790-41e5-ae68-055a1275b728%2FFoxDoubt%20_%20Homemade%20Cactus%20Icon.svg?v=1568143773901")
+  @include icon("../images/icons/homemade-cactus.svg")
 }
 
 .icon-fox {
-@include icon("https://cdn.glitch.com/305cb3bd-1790-41e5-ae68-055a1275b728%2FCopy%20of%20FoxDoubt%20_%20fox%20Icon.svg?v=1568318930326", 50px 50px);
+@include icon("../images/icons/homemade-foxdoubt.svg", 50px 50px);
   background-position: center;
 }
 
