@@ -9,7 +9,7 @@ class Layout extends React.Component {
 
     if (location.pathname === rootPath) {
       header = (
-        <h1>
+        <h1 className='logo-text'>
           <Link to={`/`}>{title}</Link>
         </h1>
       );
@@ -24,8 +24,8 @@ class Layout extends React.Component {
       <React.Fragment>
         <nav className='top-nav flex'>
           <div className='logo-container flex align-center'>
-            <p className='logo-text'>{header}</p>
-            <div class='icon-fox'></div>
+            {header}
+            <div className='icon-fox'></div>
           </div>
         </nav>
 
