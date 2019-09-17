@@ -29,16 +29,16 @@ class Layout extends React.Component {
           </div>
         </nav>
 
-        <main>{children}</main>
-        <footer class='footer'>
-          <div class='flex nav'>
+        <main class='xs-gutter'>{children}</main>
+        <footer className='footer'>
+          <div className='flex nav'>
             <div class='flex nav-about-connect'>
               <p>about</p>
               <p>connect</p>
             </div>
             <p class='bold italic'>more posts</p>
           </div>
-          <div class='copyright-container'>
+          <div className='copyright-container'>
             <p class='copyright-content'>copyright &copy 2019 foxdoubt</p>
           </div>
         </footer>

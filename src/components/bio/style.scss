@@ -1,0 +1,16 @@
+$profile-image-height: 200px;
+
+.profile {
+  * {
+    margin-bottom: 0;
+  }
+  .avatar-container {
+    width: 35%;
+  }
+  .nametag-container {
+    width: 65%;
+    .nametag {
+      font-size: $h3-heading-font-size;
+    }
+  }
+}
