@@ -1,0 +1,247 @@
+// variables
+$content-container-margin: 10px;
+$narrow-content-gutter: 10px;
+$wide-content-gutter: 50px;
+$black: #2f2f2f;
+$light-gray: #969696;
+$desert-sky-dusk: #0090c4;
+$desert-sand: #ffe599ff;
+$desert-white: #fcfafaff;
+$foxdoubt-script: "Pacifico", cursive;
+$icon-width: 55px;
+$icon-height: 75px;
+$icon-background-size: 75px 93px;
+$article-title-font-size: 28px;
+$article-content-font-size: 14px;
+$article-content-font-size-sm: 12px;
+$article-content-font-size-xs: 9px;
+$card-height: 50px;
+$tablet-width: 768px;
+$desktop-width: 1024px;
+
+// mixins
+
+@mixin tablet {
+  @media (min-width: $tablet-width) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: $desktop-width) {
+    @content;
+  }
+}
+
+@mixin icon ($url, $background-size: $icon-background-size) {
+  width: $icon-width;
+  height: $icon-height;
+  background-repeat: no-repeat;
+  background-size: $background-size;
+  background-repeat: no-repeat;
+  background-image: url("#{$url}");
+}
+
+// placeholders
+
+%uppercase-small {
+  text-transform: uppercase;
+  font-size: $article-content-font-size-xs;
+}
+
+%uppercase-xs {
+  text-transform: uppercase;
+  font-size: $article-content-font-size-sm;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  color: $black;
+  height: 100%;
+}
+
+h1 {
+  font-family: $foxdoubt-script;
+}
+
+p {
+  font-family: "Open Sans", sans-serif;
+  font-size: $article-content-font-size;
+}
+
+// framework
+
+.card-white {
+  background-color: $desert-white;
+  min-height: $card-height;
+}
+
+.align-self-flex-end {
+  align-self: flex-end;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.uppercase-small {
+  @extend %uppercase-small;
+}
+
+.blue-underline {
+  border-bottom: 3px solid $desert-sky-dusk;
+}
+
+.article-title {
+  font-size: $article-title-font-size;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.center {
+  text-align: center;
+}
+
+.relative {
+  position: relative;
+}
+
+.flex {
+  display: flex;
+  &-tablet {
+    display: none;
+    @include tablet {
+      display: flex;
+    }
+  }
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.justify-space-evenly {
+  justify-content: space-evenly;
+}
+
+.align-center {
+  align-items: center;
+}
+
+// custom
+
+.top-nav {
+  height: $card-height;
+  background-color: $desert-sky-dusk;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 $narrow-content-gutter;
+  @include tablet {
+     padding: 0 $wide-content-gutter; 
+  }
+  .logo-text {
+    font-family: $foxdoubt-script;
+    color: $desert-white;
+  }
+}
+
+.content-container {
+  margin: $content-container-margin;
+  @include tablet {
+    display: flex;
+  }
+}
+
+.foxdoubt-nav {
+  display: none;
+  @include tablet {
+    display: initial;
+    background-color: $desert-sand;
+    min-width: 250px;
+    width: 100%;
+    max-width: 275px;
+    padding: $narrow-content-gutter;
+    .nav-more-posts-container {
+      margin-top: $wide-content-gutter;
+      .nav-more-posts-post {
+        margin: $narrow-content-gutter;
+      }
+    }
+  }
+}
+
+.blog-content {
+  margin: 0 0 120px;
+  @include tablet {
+    margin: 0;
+  }
+  p {
+    margin: $narrow-content-gutter 0;
+  }
+}
+
+
+.icon-cactus {
+  @include icon("https://cdn.glitch.com/305cb3bd-1790-41e5-ae68-055a1275b728%2FFoxDoubt%20_%20Homemade%20Cactus%20Icon.svg?v=1568143773901")
+}
+
+.icon-fox {
+@include icon("https://cdn.glitch.com/305cb3bd-1790-41e5-ae68-055a1275b728%2FCopy%20of%20FoxDoubt%20_%20fox%20Icon.svg?v=1568318930326", 50px 50px);
+  background-position: center;
+}
+
+.timestamp {
+  color: $light-gray;
+  text-transform: uppercase;
+  font-size: $article-content-font-size-sm;
+}
+
+.footer {
+  box-shadow: 0 5px 20px #292b2c8d;
+  @include tablet {
+    box-shadow: initial;
+    background: none;
+    position: initial;
+  }
+  padding: $narrow-content-gutter;
+  height: 100px;
+  background-color: $desert-sand;
+  width: 100%;
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  .nav {
+    @include tablet {
+      display: none;
+    }
+    p {
+      margin: 0 $narrow-content-gutter;
+    }
+    justify-content: space-between;
+    @extend %uppercase-small;
+    p {
+      cursor: pointer;
+    }
+  }
+  .copyright-container {
+    @extend .flex;
+    height: 100%;
+    justify-content: center;
+    align-items: flex-end;
+    .copyright-content {
+      margin: 0 0 15px;
+      @extend %uppercase-xs;
+    }
+  }
+}

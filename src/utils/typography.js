@@ -1,16 +1,17 @@
-import Typography from "typography"
+import Typography from 'typography';
 
 const foxDoubtTheme = new Typography({
   baseFontSize: '14px',
-  googleFonts: [{
-    name: 'Open Sans',
-    styles: ['300', '400', '400i', '800', '800i'],
-  }, 
-  {
-    name: 'Pacifico',
-    styles: ['400']
-  }
-],
+  googleFonts: [
+    {
+      name: 'Open Sans',
+      styles: ['300', '400', '400i', '800', '800i']
+    },
+    {
+      name: 'Pacifico',
+      styles: ['400']
+    }
+  ],
   headerFontFamily: ['Pacifico', 'cursive'],
   headerColor: '#2f2f2f',
   headerWeight: 'normal',
@@ -21,7 +22,7 @@ const foxDoubtTheme = new Typography({
 
 // Hot reload typography in development.
 if (process.env.NODE_ENV !== `production`) {
-  foxDoubtTheme.injectStyles()
+  foxDoubtTheme.injectStyles();
 }
 
 export default foxDoubtTheme;

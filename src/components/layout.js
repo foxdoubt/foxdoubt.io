@@ -1,75 +1,50 @@
-import React from "react"
-import { Link } from "gatsby"
-
-import { rhythm, scale } from "../utils/typography"
+import React from 'react';
+import { Link } from 'gatsby';
 
 class Layout extends React.Component {
   render() {
-    const { location, title, children } = this.props
-    const rootPath = `${__PATH_PREFIX__}/`
-    let header
+    const { location, title, children } = this.props;
+    const rootPath = `${__PATH_PREFIX__}/`;
+    let header;
 
     if (location.pathname === rootPath) {
       header = (
-        <h1
-          style={{
-            ...scale(1.5),
-            marginBottom: rhythm(1.5),
-            marginTop: 0,
-          }}
-        >
-          <Link
-            style={{
-              boxShadow: `none`,
-              textDecoration: `none`,
-              color: `inherit`,
-            }}
-            to={`/`}
-          >
-            {title}
-          </Link>
+        <h1>
+          <Link to={`/`}>{title}</Link>
         </h1>
-      )
+      );
     } else {
       header = (
-        <h3
-          style={{
-            fontFamily: `Montserrat, sans-serif`,
-            marginTop: 0,
-          }}
-        >
-          <Link
-            style={{
-              boxShadow: `none`,
-              textDecoration: `none`,
-              color: `inherit`,
-            }}
-            to={`/`}
-          >
-            {title}
-          </Link>
+        <h3>
+          <Link to={`/`}>{title}</Link>
         </h3>
-      )
+      );
     }
     return (
-      <div
-        style={{
-          marginLeft: `auto`,
-          marginRight: `auto`,
-          maxWidth: rhythm(24),
-          padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
-        }}
-      >
-        <header>{header}</header>
+      <React.Fragment>
+        <nav className='top-nav flex'>
+          <div className='logo-container flex align-center'>
+            <p className='logo-text'>{header}</p>
+            <div class='icon-fox'></div>
+          </div>
+        </nav>
+
         <main>{children}</main>
-        <footer>
-          © {new Date().getFullYear()}, Built with
-          {` `}
-          <a href="https://www.gatsbyjs.org">Gatsby</a>
+        <footer class='footer'>
+          <div class='flex nav'>
+            <div class='flex nav-about-connect'>
+              <p>about</p>
+              <p>connect</p>
+            </div>
+            <p class='bold italic'>more posts</p>
+          </div>
+          <div class='copyright-container'>
+            <p class='copyright-content'>copyright &copy 2019 foxdoubt</p>
+          </div>
         </footer>
-      </div>
-    )
+      </React.Fragment>
+    );
   }
 }
 
-export default Layout
+export default Layout;
