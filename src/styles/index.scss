@@ -1,9 +1,11 @@
 // variables
 $browser-min-width: 320px;
+$browser-max-width: 1400px;
 $size-bump: 10;
 $content-container-margin: 10px 20px;
 $content-space-xs: 10px;
 $content-space-sm: 20px;
+$content-space-md: 35px;
 $content-space-lg: 50px;
 $black: #2f2f2f;
 $light-gray: #cccccc;
@@ -75,6 +77,7 @@ body {
   color: $black;
   width: 100%;
   min-width: $browser-min-width;
+  max-width: $browser-max-width;
   height: 100%;
 }
 
@@ -117,6 +120,12 @@ a {
 
 .sm-margin {
   margin: $content-space-sm;
+}
+
+.md-margin {
+  &-tablet {
+    margin: $content-space-md;
+  }
 }
 
 .sm-padding {
@@ -166,7 +175,6 @@ a {
 .flex {
   display: flex;
   &-tablet {
-    display: none;
     @include tablet {
       display: flex;
     }
@@ -194,7 +202,6 @@ a {
 .top-nav {
   height: $card-height;
   background-color: $desert-sky-dusk;
-  align-items: center;
   justify-content: flex-end;
   padding: 0 $content-space-xs;
   @include tablet {
@@ -210,10 +217,15 @@ a {
   }
 }
 
-.content-container {
-  margin: $content-container-margin;
+.main-container {
   @include tablet {
-    display: flex;
+    margin: $content-space-sm $content-space-md;
+  }
+}
+
+.content-container {
+  @include tablet {
+    padding-right: $content-space-md;
   }
 }
 

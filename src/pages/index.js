@@ -17,8 +17,8 @@ class BlogIndex extends React.Component {
         <SEO title='All posts' />
         <Bio {...{ leadline, nametag }} />
         <div
+          className='content-container xs-margin-top'
           dangerouslySetInnerHTML={{ __html: bioBlurbHtml }}
-          className='xs-margin-top'
         />
       </Layout>
     );
