@@ -1,8 +1,9 @@
 module.exports = {
   siteMetadata: {
-    title: `foxdoubt.io`,
+    title: `foxdoubt`,
     author: `Dan DeWald`,
-    description: `...`,
+    description: ``,
+    leadline: `creative, unconventional thinker`,
     siteUrl: `https://gatsby-starter-blog-demo.netlify.com/`,
     social: {
       twitter: `foxdoubt`
