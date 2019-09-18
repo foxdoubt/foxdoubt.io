@@ -9,8 +9,10 @@ class Layout extends React.Component {
 
     if (location.pathname === rootPath) {
       header = (
-        <h1 className='logo-text'>
-          <Link to={`/`}>{title}</Link>
+        <h1>
+          <Link to={`/`} className='logo-text'>
+            {title}
+          </Link>
         </h1>
       );
     } else {
@@ -29,7 +31,7 @@ class Layout extends React.Component {
           </div>
         </nav>
 
-        <main class='xs-gutter'>{children}</main>
+        <main class='sm-margin layout-main'>{children}</main>
         <footer className='footer'>
           <div className='flex nav'>
             <div class='flex nav-about-connect'>
@@ -39,7 +41,9 @@ class Layout extends React.Component {
             <p class='bold italic'>more posts</p>
           </div>
           <div className='copyright-container'>
-            <p class='copyright-content'>copyright &copy 2019 foxdoubt</p>
+            <p class='copyright-content'>{`copyright ${String.fromCharCode(
+              169
+            )} 2019 foxdoubt`}</p>
           </div>
         </footer>
       </React.Fragment>

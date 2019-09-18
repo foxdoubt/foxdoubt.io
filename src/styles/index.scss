@@ -1,10 +1,10 @@
 // variables
 $browser-min-width: 320px;
-
-$content-container-margin: 10px;
-$content-gutter-xs: 10px;
-$content-gutter-sm: 20px;
-$content-gutter-lg: 50px;
+$size-bump: 10;
+$content-container-margin: 10px 20px;
+$content-space-xs: 10px;
+$content-space-sm: 20px;
+$content-space-lg: 50px;
 $black: #2f2f2f;
 $light-gray: #cccccc;
 $desert-sky-dusk: #0090c4;
@@ -24,6 +24,7 @@ $article-content-font-size-xs: 9px;
 $card-height: 50px;
 $tablet-width: 768px;
 $desktop-width: 1024px;
+$footer-height: 100px;
 
 // mixins
 
@@ -79,11 +80,17 @@ body {
 
 h1 {
   font-family: $foxdoubt-script;
+  margin: 0;
 }
 
 p {
   font-family: "Open Sans", sans-serif;
   font-size: $article-content-font-size;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
 }
 
 // framework
@@ -98,11 +105,22 @@ p {
 }
 
 .padding-top-sm {
-  padding-top: $content-gutter-sm;
+  padding-top: $content-space-sm;
 }
 
-.xs-gutter {
-  margin: $content-gutter-xs;
+.xs-margin {
+  margin: $content-space-xs;
+  &-top {
+    margin-top: $content-space-xs;
+  }
+}
+
+.sm-margin {
+  margin: $content-space-sm;
+}
+
+.sm-padding {
+  padding: $content-space-sm;
 }
 
 .align-self-flex-end {
@@ -169,8 +187,6 @@ p {
 
 .block-quote, .block-quote-container {
   color: $light-gray;
-  padding: 0 $content-gutter-sm;
-  font-weight: 300;
 }
 
 // custom
@@ -180,13 +196,17 @@ p {
   background-color: $desert-sky-dusk;
   align-items: center;
   justify-content: flex-end;
-  padding: 0 $content-gutter-xs;
+  padding: 0 $content-space-xs;
   @include tablet {
-     padding: 0 $content-gutter-lg; 
+     padding: 0 $content-space-lg; 
   }
-  .logo-text {
-    font-family: $foxdoubt-script;
-    color: $desert-white;
+  h1 {
+    cursor: pointer;
+    font-size: ($article-content-font-size-sm);
+    .logo-text {
+      font-family: $foxdoubt-script;
+      color: $desert-white;
+    }
   }
 }
 
@@ -205,14 +225,18 @@ p {
     min-width: 250px;
     width: 100%;
     max-width: 275px;
-    padding: $content-gutter-xs;
+    padding: $content-space-xs;
     .nav-more-posts-container {
-      margin-top: $content-gutter-lg;
+      margin-top: $content-space-lg;
       .nav-more-posts-post {
-        margin: $content-gutter-xs;
+        margin: $content-space-xs;
       }
     }
   }
+}
+
+.layout-main {
+  margin-bottom: ($footer-height * 1.5);
 }
 
 .blog-content {
@@ -221,7 +245,7 @@ p {
     margin: 0;
   }
   p {
-    margin: $content-gutter-xs 0;
+    margin: $content-space-xs 0;
   }
 }
 
@@ -231,7 +255,7 @@ p {
 }
 
 .icon-fox {
-@include icon("../images/icons/homemade-foxdoubt.svg", 50px 50px);
+@include icon("../images/icons/homemade-foxdoubt.svg", 40px);
   background-position: center;
 }
 
@@ -248,8 +272,8 @@ p {
     background: none;
     position: initial;
   }
-  padding: $content-gutter-xs;
-  height: 100px;
+  padding: $content-space-xs;
+  height: $footer-height;
   background-color: $desert-sand;
   width: 100%;
   position: fixed;
@@ -260,7 +284,7 @@ p {
       display: none;
     }
     p {
-      margin: 0 $content-gutter-xs;
+      margin: 0 $content-space-xs;
       cursor: pointer;
     }
     justify-content: space-between;

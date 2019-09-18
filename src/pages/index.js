@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, graphql } from 'gatsby';
+import { graphql } from 'gatsby';
 
 import Bio from '../components/bio';
 import Layout from '../components/layout';
@@ -16,7 +16,10 @@ class BlogIndex extends React.Component {
       <Layout location={this.props.location} title={siteTitle}>
         <SEO title='All posts' />
         <Bio {...{ leadline, nametag }} />
-        <div dangerouslySetInnerHTML={{ __html: bioBlurbHtml }} />
+        <div
+          dangerouslySetInnerHTML={{ __html: bioBlurbHtml }}
+          className='xs-margin-top'
+        />
       </Layout>
     );
   }

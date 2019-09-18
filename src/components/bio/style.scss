@@ -1,6 +1,5 @@
-$profile-image-height: 200px;
-
 .profile {
+  min-width: $browser-min-width;
   * {
     margin-bottom: 0;
   }

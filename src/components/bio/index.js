@@ -7,8 +7,8 @@ const Bio = ({ nametag, leadline }) => {
       <div className='avatar-container iceblue-container'>
         <img className='avatar' src={avatar} alt='Dan DeWald avatar' />
       </div>
-      <div className='flex flex-column justify-space-evenly nametag-container'>
-        <h3 className='nametag center'>{nametag}</h3>
+      <div className='flex flex-column justify-space-evenly sm-padding nametag-container'>
+        <h3 className='nametag'>{nametag}</h3>
         <p className='block-quote'>{leadline}</p>
       </div>
     </div>
