@@ -9,6 +9,7 @@ $content-space-md: 35px;
 $content-space-lg: 50px;
 $black: #2f2f2f;
 $light-gray: #cccccc;
+$extremely-light-gray: #f2f2f2;
 $desert-sky-dusk: #0090c4;
 $desert-sand: #ffe599ff;
 $desert-white: #fcfafaff;
@@ -74,11 +75,13 @@ $footer-height: 100px;
 }
 
 body {
+  background-color: $extremely-light-gray;
   color: $black;
   width: 100%;
   min-width: $browser-min-width;
   max-width: $browser-max-width;
   height: 100%;
+  margin: 0 auto;
 }
 
 h1 {
@@ -96,6 +99,10 @@ a {
   cursor: pointer;
 }
 
+img {
+  display: block;
+}
+
 // framework
 
 .card-white {
@@ -105,6 +112,10 @@ a {
 
 .iceblue-container {
   background-color: $ice-blue;
+}
+
+.padding-sm {
+  padding: $content-space-sm;
 }
 
 .padding-top-sm {
@@ -217,10 +228,13 @@ a {
   }
 }
 
+.site-background {
+  background-color: $light-gray;
+}
+
 .main-container {
-  @include tablet {
-    margin: $content-space-sm $content-space-md;
-  }
+  background-color: $desert-white;
+  margin: 0 $content-space-sm $content-space-md;
 }
 
 .content-container {

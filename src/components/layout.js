@@ -40,12 +40,12 @@ class Layout extends React.Component {
     }
     return (
       <React.Fragment>
-        <nav className='top-nav flex'>
+        {/* <nav className='top-nav flex'>
           <div className='logo-container flex align-center'>
             {header}
             <div className='icon-fox'></div>
           </div>
-        </nav>
+        </nav> */}
         <div className='main-container flex-tablet sm-margin'>
           <main className='layout-main'>{children}</main>
           <TabletSidebar />
