@@ -264,6 +264,7 @@ img {
 }
 
 .site-navigation-sticker {
+  background-color: $desert-white;
   h1 {
     font-size: $h3-heading-font-size;
     a {
@@ -281,13 +282,17 @@ img {
 .page-container {
   margin: 0 auto;
   max-width: $page-content-max-width;
-  background-color: $desert-white;
-  height: 100vh;
 }
 
 .main-container {
-  background-color: $desert-white;
+  height: 100vh;
   margin: 0 $content-space-sm $content-space-md;
+  .main-left {
+    background-color: $desert-white;
+    @include tablet {
+      margin-right: $content-space-xs;
+    }
+  }
 }
 
 .content-container {
@@ -306,7 +311,8 @@ img {
     max-width: 275px;
     padding: $content-space-xs;
     .nav-more-posts-container {
-      margin-top: $content-space-lg;
+      background-color: $desert-white;
+      margin-top: $content-space-sm;
       a {
         color: $black;
       }

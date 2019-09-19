@@ -28,7 +28,7 @@ const TabletSidebar = ({ postData, header, siteNavigation }) => {
         </div>
         <div className='icon-fox'></div>
       </div>
-      <div className='nav-more-posts-container'>
+      <div className='nav-more-posts-container sm-padding'>
         <div class='card'>
           <p className='bold uppercase'>posts</p>
         </div>
@@ -112,8 +112,8 @@ const Layout = props => (
       return (
         <React.Fragment>
           <div className='page-container'>
-            <div className='main-container flex-tablet sm-margin'>
-              <main>{children}</main>
+            <div className='main-container flex-tablet'>
+              <main className='main-left'>{children}</main>
               <TabletSidebar
                 postData={edges ? edges : null}
                 header={header}
