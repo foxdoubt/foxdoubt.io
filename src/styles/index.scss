@@ -10,6 +10,7 @@ $content-space-md: 35px;
 $content-space-lg: 50px;
 $black: #2f2f2f;
 $light-gray: #cccccc;
+$lighter-gray: #e3e0e0;
 $extremely-light-gray: #f2f2f2;
 $desert-sky-dusk: #0090c4;
 $desert-sand: #ffe599ff;
@@ -106,9 +107,13 @@ img {
 
 // framework
 
-.card-white {
-  background-color: $desert-white;
+.card {
   min-height: $card-height;
+  display: flex;
+  align-items: center;
+  &-white {
+    background-color: $desert-white;
+  }
 }
 
 .bg {
@@ -230,6 +235,10 @@ img {
   text-transform: uppercase;
 }
 
+.horizontal-divider {
+  background-color: $lighter-gray;
+}
+
 // custom
 
 .top-nav {
@@ -298,8 +307,8 @@ img {
     padding: $content-space-xs;
     .nav-more-posts-container {
       margin-top: $content-space-lg;
-      .nav-more-posts-post {
-        margin: $content-space-xs;
+      a {
+        color: $black;
       }
     }
   }

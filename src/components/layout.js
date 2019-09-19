@@ -29,12 +29,25 @@ const TabletSidebar = ({ postData, header, siteNavigation }) => {
         <div className='icon-fox'></div>
       </div>
       <div className='nav-more-posts-container'>
-        <p className='center'>posts</p>
+        <div class='card'>
+          <p className='bold uppercase'>posts</p>
+        </div>
+        <hr className='horizontal-divider' />
         {postData &&
-          postData.map(post => {
+          postData.map((post, i) => {
+            const horizontalDivider =
+              i !== postData.length - 1 ? (
+                <hr className='horizontal-divider' />
+              ) : null;
             const postTitle = post.node.frontmatter.title;
+            const { slug } = post.node.fields;
             return (
-              <div className='nav-more-posts-post card-white'>{postTitle}</div>
+              <Fragment>
+                <div className='card'>
+                  <Link to={slug}>{postTitle}</Link>
+                </div>
+                {horizontalDivider}
+              </Fragment>
             );
           })}
       </div>
