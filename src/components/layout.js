@@ -77,24 +77,26 @@ const Layout = props => (
             <div className='icon-fox'></div>
           </div>
         </nav> */}
-            <div className='main-container flex-tablet sm-margin'>
-              <main className='layout-main'>{children}</main>
-              <TabletSidebar postData={edges ? edges : null} />
-            </div>
-            <footer className='footer'>
-              <div className='flex nav'>
-                <div className='flex nav-about-connect'>
-                  <p>about</p>
-                  <p>connect</p>
+            <div className='page-center'>
+              <div className='main-container flex-tablet sm-margin'>
+                <main className='layout-main'>{children}</main>
+                <TabletSidebar postData={edges ? edges : null} />
+              </div>
+              <footer className='footer'>
+                <div className='flex nav'>
+                  <div className='flex nav-about-connect'>
+                    <p>about</p>
+                    <p>connect</p>
+                  </div>
+                  <p className='bold italic'>more posts</p>
                 </div>
-                <p className='bold italic'>more posts</p>
-              </div>
-              <div className='copyright-container'>
-                <p className='copyright-content'>{`copyright ${String.fromCharCode(
-                  169
-                )} 2019 foxdoubt`}</p>
-              </div>
-            </footer>
+                <div className='copyright-container'>
+                  <p className='copyright-content'>{`copyright ${String.fromCharCode(
+                    169
+                  )} 2019 foxdoubt`}</p>
+                </div>
+              </footer>
+            </div>
           </React.Fragment>
         );
       }
