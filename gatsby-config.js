@@ -7,7 +7,13 @@ module.exports = {
     siteUrl: `https://gatsby-starter-blog-demo.netlify.com/`,
     social: {
       twitter: `foxdoubt`
-    }
+    },
+    siteNavigation: [
+      {
+        name: 'about',
+        slug: '/about'
+      }
+    ]
   },
   plugins: [
     {

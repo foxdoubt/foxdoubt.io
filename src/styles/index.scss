@@ -17,10 +17,10 @@ $desert-white: #fcfafaff;
 $ice-blue: #0090c415;
 $foxdoubt-script: "Pacifico", cursive;
 $icon-width: 55px;
-$icon-height: 75px;
+$icon-height: 55px;
 $icon-background-size: 75px 93px;
 $article-title-font-size: 28px;
-$h3-heading-font-size: 22px;
+$h3-heading-font-size: 20px;
 
 $article-content-font-size: 14px;
 $article-content-font-size-sm: 12px;
@@ -78,9 +78,7 @@ $footer-height: 100px;
 body {
   background-color: $extremely-light-gray;
   color: $black;
-  width: 100%;
   min-width: $browser-min-width;
-  height: 100%;
 }
 
 h1 {
@@ -96,6 +94,10 @@ p {
 a {
   text-decoration: none;
   cursor: pointer;
+  color: $desert-sky-dusk;
+  &:visited {
+    color: $desert-sky-dusk;
+  }
 }
 
 img {
@@ -104,18 +106,22 @@ img {
 
 // framework
 
-.page-center {
-  margin: 0 auto;
-  max-width: $page-content-max-width;
-}
-
 .card-white {
   background-color: $desert-white;
   min-height: $card-height;
 }
 
-.iceblue-container {
-  background-color: $ice-blue;
+.bg {
+  &-ice-blue {
+    background-color: $ice-blue;
+  }
+  &-desert-sky-dusk {
+    background-color: $desert-sky-dusk;
+  }
+}
+
+.desert-sky-dusk {
+  color: $desert-sky-dusk;
 }
 
 .padding-sm {
@@ -204,12 +210,24 @@ img {
   justify-content: space-evenly;
 }
 
+.justify-center {
+  justify-content: center;
+}
+
 .align-center {
   align-items: center;
 }
 
 .block-quote, .block-quote-container {
   color: $light-gray;
+}
+
+.capitalize {
+  text-transform: capitalize; 
+}
+
+.uppercase {
+  text-transform: uppercase;
 }
 
 // custom
@@ -224,7 +242,7 @@ img {
   }
   h1 {
     cursor: pointer;
-    font-size: ($article-content-font-size-sm);
+    font-size: $article-content-font-size-sm;
     .logo-text {
       font-family: $foxdoubt-script;
       color: $desert-white;
@@ -234,6 +252,28 @@ img {
 
 .site-background {
   background-color: $light-gray;
+}
+
+.site-navigation-sticker {
+  h1 {
+    font-size: $h3-heading-font-size;
+    a {
+      color: $black;
+      &:visited {
+        color: $black;
+      }
+    }
+  }
+}
+
+// "page" as a design construct means all site content on a page
+// not including empty surrounding space
+
+.page-container {
+  margin: 0 auto;
+  max-width: $page-content-max-width;
+  background-color: $desert-white;
+  height: 100vh;
 }
 
 .main-container {
@@ -251,7 +291,7 @@ img {
   display: none;
   @include tablet {
     display: initial;
-    background-color: $desert-sand;
+    // background-color: $desert-sand;
     min-width: 250px;
     width: 100%;
     max-width: 275px;
@@ -263,10 +303,6 @@ img {
       }
     }
   }
-}
-
-.layout-main {
-  margin-bottom: ($footer-height * 1.5);
 }
 
 .blog-content {

@@ -17,7 +17,10 @@ const foxDoubtTheme = new Typography({
   headerWeight: 'normal',
   bodyFontFamily: ['Open Sans', 'sans-serif'],
   bodyColor: '#2f2f2f',
-  boldWeight: '800'
+  boldWeight: '800',
+  overrideStyles: () => ({
+    p: { marginBottom: 0 }
+  })
 });
 
 // Hot reload typography in development.
