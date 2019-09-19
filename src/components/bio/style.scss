@@ -5,6 +5,7 @@
   }
   .avatar-container {
     width: 35%;
+    margin: $content-space-sm 0 0 $content-space-sm;
     .avatar {
       margin: 0 auto;
     }
@@ -14,6 +15,9 @@
     .nametag {
       font-size: $h3-heading-font-size;
       font-size: 7vw;
+      @include tablet {
+        font-size: $text-xxl;
+      }
     }
   }
 }
