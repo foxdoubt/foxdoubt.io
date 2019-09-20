@@ -15,6 +15,7 @@ $extremely-light-gray: #f2f2f2;
 $desert-sky-dusk: #0090c4;
 $desert-sand: #ffe599ff;
 $desert-white: #fcfafaff;
+$desert-red: #9a0646;
 $ice-blue: #0090c415;
 $foxdoubt-script: "Pacifico", cursive;
 $icon-width: 55px;
@@ -47,12 +48,7 @@ $footer-height: 100px;
   }
 }
 
-@mixin icon (
-  $url, 
-  $background-size: $icon-background-size,
-  $width: $icon-width,
-  $height: $icon-height,
-  ) {
+@mixin icon($url, $background-size: $icon-background-size, $width: $icon-width, $height: $icon-height) {
   width: $width;
   height: $height;
   background-repeat: no-repeat;
@@ -225,12 +221,13 @@ img {
   align-items: center;
 }
 
-.block-quote, .block-quote-container {
+.block-quote,
+.block-quote-container {
   color: $light-gray;
 }
 
 .capitalize {
-  text-transform: capitalize; 
+  text-transform: capitalize;
 }
 
 .uppercase {
@@ -249,7 +246,7 @@ img {
   justify-content: flex-end;
   padding: 0 $content-space-xs;
   @include tablet {
-     padding: 0 $content-space-lg; 
+    padding: 0 $content-space-lg;
   }
   h1 {
     cursor: pointer;
@@ -332,13 +329,12 @@ img {
   }
 }
 
-
 .icon-cactus {
-  @include icon("../images/icons/homemade-cactus.svg")
+  @include icon("../images/icons/homemade-cactus.svg");
 }
 
 .icon-fox {
-@include icon("../images/icons/homemade-foxdoubt.svg", 40px);
+  @include icon("../images/icons/homemade-foxdoubt.svg", 40px);
   background-position: center;
 }
 
@@ -349,19 +345,47 @@ img {
 }
 
 .footer {
-  box-shadow: 0 5px 20px #292b2c8d;
-  @include tablet {
-    box-shadow: initial;
-    background: none;
-    position: initial;
+  .nav-more-posts-container {
+    display: none;
   }
-  padding: $content-space-xs;
-  height: $footer-height;
-  background-color: $desert-sand;
-  width: 100%;
-  position: fixed;
-  bottom: 0px;
-  right: 0px;
+  .footer-nav-items-container {
+    background-color: $desert-sand;
+  }
+  .footer-nav-modal {
+    transition: all 0.1s linear;
+    .modal-cover {
+      width: 100%;
+      height: 100%;
+      background-color: $desert-sand;
+    }
+    @include tablet {
+      box-shadow: initial;
+      background: none;
+      position: initial;
+    }
+    padding: $content-space-xs;
+    height: $footer-height;
+    width: 100%;
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    &.active {
+      height: 100%;
+      transition: all 0.1s linear;
+      .nav-more-posts-container {
+        display: block;
+      }
+      .modal-cover {
+        opacity: 0.8;
+      }
+    }
+  }
+  p {
+    &.active {
+      color: $desert-red;
+    }
+  }
+  box-shadow: 0 5px 20px #292b2c8d;
   .nav {
     @include tablet {
       display: none;
@@ -375,9 +399,12 @@ img {
   }
   .copyright-container {
     @extend .flex;
-    height: 100%;
     justify-content: center;
     align-items: flex-end;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    z-index: 1;
     .copyright-content {
       margin: 0 0 15px;
       @extend %uppercase-xs;
@@ -385,4 +412,4 @@ img {
   }
 }
 
-@import '../components/bio/style.scss';
+@import "../components/bio/style.scss";
