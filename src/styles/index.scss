@@ -80,6 +80,12 @@ body {
   min-width: $browser-min-width;
 }
 
+body,
+html {
+  position: relative;
+  height: 100%;
+}
+
 h1 {
   font-family: $foxdoubt-script;
   margin: 0;
@@ -300,11 +306,11 @@ img {
 }
 
 .main-container {
-  height: 100vh;
+  min-height: 100vh;
   margin: 0 $content-space-sm 0 $content-space-md;
   .main-left {
-    height: 100%;
     background-color: $desert-white;
+    min-height: 100vh;
     @include tablet {
       margin-right: $content-space-xs;
     }
@@ -416,7 +422,6 @@ img {
     justify-content: space-between;
   }
   .copyright-container {
-    @extend %uppercase-small;
     @extend .flex;
     justify-content: center;
     align-items: center;
@@ -426,7 +431,7 @@ img {
     height: ($footer-height / 2);
     background-color: $desert-sand;
     @include tablet {
-      position: static;
+      position: initial;
       background-color: initial;
     }
     .copyright-content {
