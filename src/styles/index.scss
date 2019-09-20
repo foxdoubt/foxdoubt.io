@@ -119,6 +119,15 @@ img {
   }
 }
 
+.color {
+  &-content {
+    color: $black;
+    &:visited {
+      color: $black;
+    }
+  }
+}
+
 .bg {
   &-ice-blue {
     background-color: $ice-blue;
@@ -152,6 +161,7 @@ img {
 }
 
 .md-margin {
+  margin: $content-space-md;
   &-tablet {
     margin: $content-space-md;
   }
@@ -239,11 +249,11 @@ img {
   text-transform: uppercase;
 }
 
+// custom
+
 .horizontal-divider {
   background-color: $lighter-gray;
 }
-
-// custom
 
 .top-nav {
   height: $card-height;
@@ -353,11 +363,14 @@ img {
   .footer-nav-modal {
     box-shadow: 0 5px 20px #292b2c8d;
     background-color: $desert-sand;
-    transition: all 0.3s linear;
+    transition: all 0.2s linear;
     .modal-cover {
       width: 100%;
       height: 100%;
       background-color: $desert-sand;
+    }
+    .footer-nav-post-preview {
+      text-transform: capitalize;
     }
     @include tablet {
       background: none;
@@ -371,7 +384,7 @@ img {
     right: 0px;
     &.active {
       height: 100%;
-      transition: all 0.3s linear;
+      transition: all 0.2s linear;
     }
   }
   p {
@@ -388,9 +401,9 @@ img {
       cursor: pointer;
     }
     justify-content: space-between;
-    @extend %uppercase-small;
   }
   .copyright-container {
+    @extend %uppercase-small;
     @extend .flex;
     justify-content: center;
     align-items: flex-end;
@@ -398,6 +411,10 @@ img {
     bottom: 0;
     width: 100%;
     background-color: $desert-sand;
+    @include tablet {
+      position: static;
+      background-color: initial;
+    }
     .copyright-content {
       margin: 0 0 15px;
       @extend %uppercase-xs;

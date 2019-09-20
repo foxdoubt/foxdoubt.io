@@ -1,31 +1,47 @@
 import React, { Fragment, useState } from 'react';
 import { Link, StaticQuery, graphql } from 'gatsby';
 
-const PostPreview = ({ postData, classes }) => (
-  <div className={`nav-more-posts-container sm-padding ${classes}`}>
-    <div class='card'>
-      <p className='bold uppercase'>posts</p>
+const PostPreview = ({ postData, forFooterNav = false }) => {
+  let headerClasses;
+  let itemClasses;
+  let dividerHtml = <hr className='horizontal-divider' />;
+  let headerHtml = (
+    <Fragment>
+      <div class={`card`}>
+        <p className='bold uppercase'>posts</p>
+      </div>
+      {dividerHtml}
+    </Fragment>
+  );
+  if (forFooterNav) {
+    headerHtml = null;
+    dividerHtml = null;
+    itemClasses = 'capitalize color-content justify-center';
+  }
+  return (
+    <div className={`nav-more-posts-container sm-padding`}>
+      {headerHtml}
+      {dividerHtml}
+      {postData &&
+        postData.map((post, i) => {
+          const horizontalDivider =
+            i !== postData.length - 1 ? dividerHtml : null;
+          const postTitle = post.node.frontmatter.title;
+          const { slug } = post.node.fields;
+          return (
+            <Fragment>
+              <div className={`card${' ' + itemClasses}`}>
+                <Link className='color-content' to={slug}>
+                  {postTitle}
+                </Link>
+              </div>
+              {horizontalDivider}
+            </Fragment>
+          );
+        })}
     </div>
-    <hr className='horizontal-divider' />
-    {postData &&
-      postData.map((post, i) => {
-        const horizontalDivider =
-          i !== postData.length - 1 ? (
-            <hr className='horizontal-divider' />
-          ) : null;
-        const postTitle = post.node.frontmatter.title;
-        const { slug } = post.node.fields;
-        return (
-          <Fragment>
-            <div className='card'>
-              <Link to={slug}>{postTitle}</Link>
-            </div>
-            {horizontalDivider}
-          </Fragment>
-        );
-      })}
-  </div>
-);
+  );
+};
 
 const TabletSidebar = ({ postData, header, siteNavigation }) => {
   const dividerHtml = <p className='desert-sky-dusk capitalize'>|</p>;
@@ -133,7 +149,7 @@ const Layout = props => {
                   siteNavigation={siteNavigation}
                 />
               </div>
-              <footer className='footer'>
+              <footer className='footer uppercase'>
                 <div
                   className={`nav footer-nav-modal${
                     isFooterNavActive ? ' active' : ''
@@ -145,7 +161,7 @@ const Layout = props => {
                         <p className='flex-1'>connect</p>
                         {footerNavBtnHtml}
                       </div>
-                      <PostPreview postData={edges} />
+                      <PostPreview postData={edges} forFooterNav={true} />
                     </div>
                   </div>
                   <div className='modal-cover'></div>
