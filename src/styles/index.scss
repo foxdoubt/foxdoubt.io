@@ -17,7 +17,7 @@ $desert-sand: #ffe599ff;
 $desert-white: #fcfafaff;
 $desert-red: #9a0646;
 $ice-blue: #0090c415;
-$foxdoubt-script: 'Pacifico', cursive;
+$foxdoubt-script: "Pacifico", cursive;
 $icon-width: 55px;
 $icon-height: 55px;
 $icon-background-size: 75px 93px;
@@ -48,17 +48,12 @@ $footer-height: 100px;
   }
 }
 
-@mixin icon(
-  $url,
-  $background-size: $icon-background-size,
-  $width: $icon-width,
-  $height: $icon-height
-) {
+@mixin icon($url, $background-size: $icon-background-size, $width: $icon-width, $height: $icon-height) {
   width: $width;
   height: $height;
   background-repeat: no-repeat;
   background-size: $background-size;
-  background-image: url('#{$url}');
+  background-image: url("#{$url}");
 }
 
 // placeholders
@@ -91,7 +86,7 @@ h1 {
 }
 
 p {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: $article-content-font-size;
 }
 
@@ -284,7 +279,8 @@ img {
 
 .site-navigation-sticker {
   background-color: $desert-white;
-  h1 {
+  h1,
+  h3 {
     font-size: $h3-heading-font-size;
     a {
       color: $black;
@@ -318,6 +314,8 @@ img {
 .content-container {
   @include tablet {
     padding-right: $content-space-md;
+    width: 720px;
+    max-width: 100%;
   }
   p {
     &:not(:first-child) {
@@ -356,11 +354,11 @@ img {
 }
 
 .icon-cactus {
-  @include icon('../images/icons/homemade-cactus.svg');
+  @include icon("../images/icons/homemade-cactus.svg");
 }
 
 .icon-fox {
-  @include icon('../images/icons/homemade-foxdoubt.svg', 40px);
+  @include icon("../images/icons/homemade-foxdoubt.svg", 40px);
   background-position: center;
 }
 
@@ -436,4 +434,4 @@ img {
   }
 }
 
-@import '../components/bio/style.scss';
+@import "../components/bio/style.scss";
