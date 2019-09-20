@@ -234,6 +234,11 @@ img {
 
 .align-center {
   align-items: center;
+  &-tablet {
+    @include tablet {
+      align-items: center;
+    }
+  }
 }
 
 .block-quote,
@@ -300,8 +305,9 @@ img {
 
 .main-container {
   height: 100vh;
-  margin: 0 $content-space-sm $content-space-md;
+  margin: 0 $content-space-sm 0 $content-space-md;
   .main-left {
+    height: 100%;
     background-color: $desert-white;
     @include tablet {
       margin-right: $content-space-xs;
@@ -360,6 +366,9 @@ img {
 }
 
 .footer {
+  @include tablet {
+    height: $footer-height;
+  }
   .footer-nav-modal {
     box-shadow: 0 5px 20px #292b2c8d;
     background-color: $desert-sand;
@@ -406,17 +415,17 @@ img {
     @extend %uppercase-small;
     @extend .flex;
     justify-content: center;
-    align-items: flex-end;
+    align-items: center;
     position: fixed;
     bottom: 0;
     width: 100%;
+    height: ($footer-height / 2);
     background-color: $desert-sand;
     @include tablet {
       position: static;
       background-color: initial;
     }
     .copyright-content {
-      margin: 0 0 15px;
       @extend %uppercase-xs;
     }
   }

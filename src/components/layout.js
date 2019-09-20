@@ -158,7 +158,7 @@ const Layout = props => {
                   siteNavigation={siteNavigation}
                 />
               </div>
-              <footer className='footer uppercase'>
+              <footer className='footer uppercase flex-tablet align-center-tablet'>
                 <div
                   className={`nav footer-nav-modal${
                     isFooterNavActive ? ' active' : ''
