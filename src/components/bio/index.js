@@ -1,11 +1,11 @@
 import React from 'react';
 import avatar from '../../images/icons/dewald-avatar.svg';
 
-const Bio = ({ nametag, leadline }) => {
+const Bio = ({ nametag, leadline, avatarSrc = avatar }) => {
   return (
     <div className='flex profile'>
       <div className='avatar-container bg-desert-sky-dusk'>
-        <img className='avatar' src={avatar} alt='Dan DeWald avatar' />
+        <img className='avatar' src={avatarSrc} alt='Dan DeWald avatar' />
       </div>
       <div className='flex flex-column justify-space-evenly sm-padding nametag-container'>
         <h3 className='nametag'>{nametag}</h3>

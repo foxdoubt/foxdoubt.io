@@ -312,6 +312,7 @@ img {
 }
 
 .content-container {
+  background: $desert-white;
   @include tablet {
     padding-right: $content-space-md;
     width: 720px;

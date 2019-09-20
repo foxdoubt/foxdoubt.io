@@ -100,6 +100,7 @@ const Layout = props => {
           }
           site {
             siteMetadata {
+              title
               siteNavigation {
                 name
                 slug
@@ -111,7 +112,8 @@ const Layout = props => {
       render={data => {
         const { edges } = data.allMarkdownRemark;
         const { siteNavigation } = data.site.siteMetadata;
-        const { location, title, children } = props;
+        const { title } = data.site.siteMetadata;
+        const { location, children } = props;
         const rootPath = `${__PATH_PREFIX__}/`;
 
         let homeNavHtml = (
