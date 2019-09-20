@@ -319,6 +319,11 @@ img {
   @include tablet {
     padding-right: $content-space-md;
   }
+  p {
+    &:not(:first-child) {
+      margin-top: $content-space-xs;
+    }
+  }
 }
 
 .foxdoubt-nav {
