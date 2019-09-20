@@ -138,14 +138,15 @@ const Layout = props => {
                   className={`nav footer-nav-modal${
                     isFooterNavActive ? ' active' : ''
                   }`}>
-                  <div className='flex footer-nav-items-container'>
-                    <p>about</p>
-                    <p>connect</p>
-                    <p
-                      onClick={() => setFooterNavState(!isFooterNavActive)}
-                      className='bold italic'>
-                      {footerNavBtnHtml}
-                    </p>
+                  <div className='footer-nav-items-container'>
+                    <div className='nav-site-options-container'>
+                      <div className='flex'>
+                        <p>about</p>
+                        <p className='flex-1'>connect</p>
+                        {footerNavBtnHtml}
+                      </div>
+                      <PostPreview postData={edges} />
+                    </div>
                   </div>
                   <div className='modal-cover'></div>
                 </div>
