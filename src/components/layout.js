@@ -2,7 +2,6 @@ import React, { Fragment, useState } from 'react';
 import { Link, StaticQuery, graphql } from 'gatsby';
 
 const PostPreview = ({ postData, forFooterNav = false }) => {
-  let headerClasses;
   let itemClasses;
   let dividerHtml = <hr className='horizontal-divider' />;
   let headerHtml = (
@@ -114,7 +113,21 @@ const Layout = props => {
         const { siteNavigation } = data.site.siteMetadata;
         const { location, title, children } = props;
         const rootPath = `${__PATH_PREFIX__}/`;
-        let header;
+
+        let homeNavHtml = (
+          <Fragment>
+            <Link className='color-content' to='/'>
+              Home
+            </Link>
+            <p>|</p>
+          </Fragment>
+        );
+
+        let header = (
+          <h3>
+            <Link to={`/`}>{title}</Link>
+          </h3>
+        );
 
         if (location.pathname === rootPath) {
           header = (
@@ -124,12 +137,7 @@ const Layout = props => {
               </Link>
             </h1>
           );
-        } else {
-          header = (
-            <h3>
-              <Link to={`/`}>{title}</Link>
-            </h3>
-          );
+          homeNavHtml = null;
         }
         const footerNavBtnHtml = (
           <p
@@ -138,6 +146,7 @@ const Layout = props => {
             {isFooterNavActive ? 'hide posts' : 'show posts'}
           </p>
         );
+
         return (
           <React.Fragment>
             <div className='page-container'>
@@ -156,9 +165,19 @@ const Layout = props => {
                   }`}>
                   <div className='footer-nav-items-container'>
                     <div className='nav-site-options-container'>
-                      <div className='flex'>
-                        <p>about</p>
-                        <p className='flex-1'>connect</p>
+                      <div className='flex padding-sm'>
+                        {homeNavHtml}
+                        {siteNavigation.map((navItem, i) => {
+                          const classes =
+                            i === siteNavigation.length - 1 ? 'flex-1' : '';
+                          return (
+                            <Link
+                              className={'color-content ' + classes}
+                              to={navItem.slug}>
+                              {navItem.name}
+                            </Link>
+                          );
+                        })}
                         {footerNavBtnHtml}
                       </div>
                       <PostPreview postData={edges} forFooterNav={true} />
