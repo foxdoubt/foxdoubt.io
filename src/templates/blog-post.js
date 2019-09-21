@@ -3,7 +3,6 @@ import { Link, graphql } from 'gatsby';
 
 import Layout from '../components/layout';
 import SEO from '../components/seo';
-import { rhythm, scale } from '../utils/typography';
 
 class BlogPostTemplate extends React.Component {
   render() {
@@ -16,15 +15,20 @@ class BlogPostTemplate extends React.Component {
           title={post.frontmatter.title}
           description={post.frontmatter.description || post.excerpt}
         />
-        <header>
-          <h1>{post.frontmatter.title}</h1>
-          <p>{post.frontmatter.date}</p>
+
+        <header className='flex flex-column padding-sm padding-top-md'>
+          <div className='flex'>
+            <div className='flex blue-underline'>
+              <h1 className='align-self-flex-end capitalize'>
+                {post.frontmatter.title}
+              </h1>
+              <figure className='icon-cactus' />
+            </div>
+          </div>
+          <p className='bold timestamp'>{post.frontmatter.date}</p>
         </header>
         <div className='content-container padding-sm'>
-          <section
-            className='content-container padding-sm'
-            dangerouslySetInnerHTML={{ __html: post.html }}
-          />
+          <section dangerouslySetInnerHTML={{ __html: post.html }} />
         </div>
         <hr className='horizontal-divider' />
 

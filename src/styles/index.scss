@@ -146,8 +146,16 @@ img {
   padding: $content-space-sm;
 }
 
-.padding-top-sm {
-  padding-top: $content-space-sm;
+.padding-top {
+  &-xs {
+    padding-top: $content-space-xs;
+  }
+  &-sm {
+    padding-top: $content-space-sm;
+  }
+  &-md {
+    padding-top: $content-space-md;
+  }
 }
 
 .xs-margin {
@@ -361,7 +369,7 @@ img {
 }
 
 .icon-cactus {
-  @include icon("../images/icons/homemade-cactus.svg");
+  @include icon($url: "../images/icons/homemade-cactus.svg", $height: 75px);
 }
 
 .icon-fox {
@@ -373,6 +381,7 @@ img {
   color: $light-gray;
   text-transform: uppercase;
   font-size: $article-content-font-size-sm;
+  margin: $content-space-xs 0;
 }
 
 .footer {
