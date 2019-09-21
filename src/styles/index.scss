@@ -319,6 +319,13 @@ img {
 .main-container {
   min-height: 100vh;
   margin: 0 $content-space-sm;
+  // this 'padding bottom' is a hack
+  // on mobile, the fixed footer is swallowing blog content
+  // and doesn't seem to respond to margin
+  // however a single pixel computed for a padding bottom
+  // generates several pixels of space for mobile Chrome and Safari on
+  // IOS. I have no idea why
+  padding-bottom: 1px;
   @include tablet {
     margin-left: $content-space-md;
   }
