@@ -82,7 +82,8 @@ const Layout = props => {
         query getLayoutData {
           allMarkdownRemark(
             sort: { fields: frontmatter___date, order: DESC }
-            limit: 3
+            limit: 6
+            filter: { frontmatter: { title: { nin: ["About", "bio blurb"] } } }
           ) {
             edges {
               node {
