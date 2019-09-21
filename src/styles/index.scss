@@ -315,12 +315,17 @@ img {
 
 .main-container {
   min-height: 100vh;
-  margin: 0 $content-space-sm 0 $content-space-md;
+  margin: 0 $content-space-sm;
+  @include tablet {
+    margin-left: $content-space-md;
+  }
   .main-left {
     background-color: $desert-white;
     min-height: 100vh;
+    margin-bottom: ($footer-height * 2);
     @include tablet {
       margin-right: $content-space-xs;
+      margin-bottom: 0;
     }
   }
 }
