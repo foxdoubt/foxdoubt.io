@@ -351,11 +351,13 @@ img {
   display: none;
   @include tablet {
     display: initial;
-    // background-color: $desert-sand;
     min-width: 250px;
     width: 100%;
     max-width: 275px;
     padding: $content-space-xs;
+    height: 100%;
+    position: sticky;
+    top: 0;
     .nav-more-posts-container {
       background-color: $desert-white;
       margin-top: $content-space-sm;
