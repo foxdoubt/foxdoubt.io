@@ -329,6 +329,7 @@ img {
     @include tablet {
       margin-right: $content-space-xs;
       margin-bottom: 0;
+      border-bottom: 1px solid $light-gray;
     }
   }
 }
@@ -392,7 +393,7 @@ img {
   text-transform: uppercase;
   margin: $content-space-xs 0;
   & + .byline {
-    margin: $content-space-xs;
+    margin: $content-space-xs 5px;
   }
 }
 

@@ -35,7 +35,6 @@ class BlogPostTemplate extends React.Component {
         <div className='content-container padding-sm'>
           <section dangerouslySetInnerHTML={{ __html: post.html }} />
         </div>
-        <hr className='horizontal-divider' />
       </Layout>
     );
   }
