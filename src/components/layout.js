@@ -43,7 +43,7 @@ const PostPreview = ({ postData, forFooterNav = false }) => {
 };
 
 const TabletSidebar = ({ postData, header, siteNavigation }) => {
-  const dividerHtml = <p className='desert-sky-dusk capitalize'>|</p>;
+  const dividerHtml = <p className='color-desert-sky-dusk capitalize'>|</p>;
   return (
     <nav className='foxdoubt-nav'>
       <div className='site-navigation-sticker flex align-center justify-center'>

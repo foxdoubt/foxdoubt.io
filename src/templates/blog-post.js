@@ -7,7 +7,7 @@ import SEO from '../components/seo';
 class BlogPostTemplate extends React.Component {
   render() {
     const post = this.props.data.markdownRemark;
-
+    const { title } = this.props.data.site.siteMetadata;
     return (
       <Layout location={this.props.location}>
         <SEO
@@ -24,7 +24,13 @@ class BlogPostTemplate extends React.Component {
               <figure className='icon-cactus' />
             </div>
           </div>
-          <p className='bold timestamp'>{post.frontmatter.date}</p>
+          <div className='flex'>
+            <p className='bold timestamp'>{post.frontmatter.date}</p>
+            <p className='byline'>
+              by{' '}
+              <span className='capitalize color-desert-sky-dusk'>{title}</span>
+            </p>
+          </div>
         </header>
         <div className='content-container padding-sm'>
           <section dangerouslySetInnerHTML={{ __html: post.html }} />

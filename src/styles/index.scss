@@ -127,6 +127,9 @@ img {
       color: $black;
     }
   }
+  &-desert-sky-dusk {
+    color: $desert-sky-dusk;
+  }
 }
 
 .bg {
@@ -385,8 +388,10 @@ img {
 .timestamp {
   color: $light-gray;
   text-transform: uppercase;
-  font-size: $article-content-font-size-sm;
   margin: $content-space-xs 0;
+  & + .byline {
+    margin: $content-space-xs;
+  }
 }
 
 .footer {
