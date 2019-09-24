@@ -19,7 +19,10 @@ const foxDoubtTheme = new Typography({
   bodyColor: '#2f2f2f',
   boldWeight: '800',
   overrideStyles: () => ({
-    'p,hr,h3,img,figure': { marginBottom: 0 }
+    'p,hr,h3,img,figure': { marginBottom: 0 },
+    '.blog-title,.blog-subtitle': {
+      fontFamily: ['Open Sans', 'sans-serif'].join(',')
+    }
   })
 });
 

@@ -343,6 +343,10 @@ img {
 
 .content-container {
   background: $desert-white;
+  .blog-title,
+  .blog-subtitle {
+    margin: $content-space-sm 0;
+  }
   @include tablet {
     padding-right: $content-space-md;
     width: 720px;

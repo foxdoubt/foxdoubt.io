@@ -41,6 +41,17 @@ module.exports = {
             }
           },
           {
+            resolve: `gatsby-remark-classes`,
+            options: {
+              classMap: {
+                h2: 'blog-title',
+                h3: 'blog-subtitle',
+                h4: 'blog-subtitle',
+                paragraph: 'blog-para'
+              }
+            }
+          },
+          {
             resolve: `gatsby-remark-responsive-iframe`,
             options: {
               wrapperStyle: `margin-bottom: 1.0725rem`
