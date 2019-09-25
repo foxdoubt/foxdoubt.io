@@ -342,7 +342,7 @@ img {
 
 .content-container {
   background: $desert-white;
-  padding: 0 $content-space-sm;
+  padding: 0 $content-space-sm $content-space-sm;
   .blog-title {
     font-weight: 600;
   }
@@ -351,7 +351,7 @@ img {
     margin: $content-space-sm 0;
   }
   @include tablet {
-    padding-right: $content-space-md;
+    // padding-right: $content-space-md;
     width: 720px;
     max-width: 100%;
   }
@@ -476,4 +476,4 @@ img {
   }
 }
 
-@import "../components/bio/style.scss";
+@import "../components/bio";
