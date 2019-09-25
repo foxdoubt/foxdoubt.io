@@ -195,18 +195,140 @@ And the markup itself
 </div>
 ```
 
-Since JSS has a whole plugin ecosystem, you can mix and match the types of CSS-in-JS you want for your project, which varies from Sass-like add-ons to functions that have APIs which give you Styled Component-like functionality. With example like this... I think, trying to accommodate the need for a composable and independent presentation layer for an application. But it still feels like unnecessary effort.
+At first glance JSS is no more egregious in its approach than any of the others we've looked at, until you consider more true-to-life examples of how you might use it to style a site. Take <a href="https://cssinjs.org/react-jss#basic" target=_blank>this example code from the JSS docs</a>:
 
-- show example of applying flex in a parent css object and then assuming the flex state in another object. Apologies for being so emphatic, but everything about this is wrong. It obscures how data in JavaScript behaves; it obscures how inheritance in CSS works.
+```javascript
+const useStyles = createUseStyles({
+  myButton: {
+    color: 'green',
+    margin: {
+      // jss-plugin-expand gives more readable syntax
+      top: 5, // jss-plugin-default-unit makes this 5px
+      right: 0,
+      bottom: 0,
+      left: '1rem'
+    },
+    '& span': {
+      // jss-plugin-nested applies this to a child span
+      fontWeight: 'bold' // jss-plugin-camel-case turns this into 'font-weight'
+    }
+  },
+  myLabel: {
+    fontStyle: 'italic'
+  }
+});
+```
 
-CSS-in-JS means values are always captured in string form. But that's not actually how CSS works. CSS primatives are awesome. The CSS parser doesn't think in those terms, so writing CSS in strings means you're enforcing another layer of abstraction on yourself. The same is true of camel-case to dash-case. CSS selectors are typically written in dash-case or snake-case, and JavaScript in camel-case. While yes, template literals do make it so you can get a whole block of styles as if it's CSS syntax, those can't be parsed the way Sass can. You can't have it both ways: if you want your styles to be data scoped to a component at run time, you need to use string based property values, otherwise you can have your template literal floating chunks of CSS, that magically find their way to a stylesheet. Or, you can just use a stylesheet!
+or worse, <a href="https://cssinjs.org/jss-syntax?v=v10.0.0#media-queries" target=_blank>this one</a>:
+
+```javascript
+const styles = {
+  button: {
+    width: 100
+  },
+  '@media (min-width: 1024px)': {
+    button: {
+      width: 200
+    }
+  }
+};
+```
+
+Or possibly even worse, <a href="https://cssinjs.org/jss-syntax?v=v10.0.0#comma-separated-values" target=_blank>this</a>:
+
+```javascript
+const styles = {
+  button: {
+    // Comma separated value with space separated values inside.
+    border: [
+      // Numbers can become default unit automatically.
+      [1, 'solid', 'red'],
+      [1, 'solid', 'blue']
+    ]
+  }
+};
+```
+
+Apologies for being so emphatic, but everything about this is wrong. It obscures how data in JavaScript behaves and it obscures how inheritance in CSS works: a true _lose-lose_.
+
+To pull this kind of thing off, CSS property values must be captured in strings. But CSS thinks in primatives that weren't conceived with a JavaScript compile step in mind. And those CSS primatives are awesome! Why deprive yourself of them by writing CSS in strings, enforcing yet another layer of abstraction on yourself in a toolchain that's already way too abstract? The same is true of camel-case to dash-case. CSS selectors are typically written in dash-case or snake-case, and JavaScript in camel-case. While yes, template literals do make it so you can move around chunks of CSS in its intended syntax, those chunks can't be parsed the way existing CSS pre- and post-processors can parse them. It appears you can't have it both ways: if you want styles as data, scoped to a component at run time, you need to use string-based property values. Otherwise, you can write floating chunks of CSS in template literals that look more like CSS, but are basically useless from a programmatic perspective once run time begins.
 
 ### The best of both worlds
 
-Consider a separate and distinct presentation layer composed with Sass that establishes a set of base variables, placeholders, mixins and functions which form the totality of your site's design behavior. It then pulls in component-specific Sass partials via `import`. These partials can live side by side with your components, just like with CSS modules, but because they're imported after your base Sass, you can use all those Sass utilities, and `@extend` base classes easily within them. This setup has at least the potential for the kind of composibility that can make medium-to-big, complex projects easier to reason about, and its the best of both worlds: your styles get to live side by side with the components they're dressing up, but they're globally aware of your base styles as well.
+Consider a separate and distinct presentation layer composed with Sass that establishes a set of base variables, placeholders, mixins and functions which form the totality of your site's design spec. It then pulls in component-specific Sass partials via `import`. These partials can live side by side with your components, just like with CSS modules, but because they're imported after your base Sass, you can use all those Sass utilities, and `@extend` base classes easily within them. This setup is nothing new. It's battle tested, and has at least the potential for the kind of composibility that can make medium-to-big, complex projects easier to reason about, and its the best of both worlds: your styles get to live side by side with the components they're dressing up, but they're globally aware of your base styles as well.
 
+```scss
+// src/styles/main.scss
+
+$blue: #0090c4;
+$sand: #ffe599ff;
+$white: #fcfafaff;
+$red: #9a0646;
+$tablet-width: 768px;
+$desktop-width: 1024px;
+$content-space-sm: 20px;
+$h3-font-size: 28px;
+$text-xxl: 44px;
+
+@mixin tablet {
+  @media (min-width: $tablet-width) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: $desktop-width) {
+    @content;
+  }
+}
+
+import './component-styles';
 ```
-example
+
+```scss
+// src/styles/component-styles/_index.scss
+
+import './../../src/components/bio';
+import './../../src/components/image';
+import './../../src/components/footer';
+// etc!
+```
+
+In your partials, compose small custom rules that take advantage of everything in scope from `main.scss` by way of the import:
+
+**src/components/bio/\_index.scss**
+
+```scss
+.profile {
+  margin: $content-space-sm 0 0 $content-space-sm;
+}
+.nametag-container {
+  .nametag {
+    font-size: $h3-heading-font-size;
+    @include tablet {
+      font-size: $text-xxl;
+    }
+  }
+}
+```
+
+Then finally hook into the styles with simple class names in React.
+
+**src/components/bio/index.js**
+
+```jsx
+import React from 'react';
+
+const Bio = ({ nametag, leadline }) => (
+  <div className='profile'>
+    <div className='nametag-container'>
+      <h3 className='nametag'>{nametag}</h3>
+      <p>{leadline}</p>
+    </div>
+  </div>
+);
+
+export default Bio;
 ```
 
 What you don't have easily here is protection against naming collisions. However, I've worked on some pretty big sites where a lot of developers are writing styles at the same time, and I can't think of a single time we encountered a naming collision. However, if it's a risk you're freaked out about, with a little finagling you could use some Webpack plugins to add hashing. Webpack could also help you break up your monolithic stylesheet into smaller pieces, with the end result being not too terribly unlike what CSS modules can do.
