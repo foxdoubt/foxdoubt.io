@@ -68,6 +68,15 @@ After compilation, the classes you use are in essence locally scoped to the comp
 }
 ```
 
+And your markup looks like this:
+
+```html
+<div class="bio-module--container--12xpO">
+  <h3 class="bio-module--nametag--2kuhI">Dan DeWald</h3>
+  <p class="bio-module--leadline--1VRZK">creative, unconventional thinker</p>
+</div>
+```
+
 CSS modules are the least egregious CSS-in-JS technique because the end result is still a stylesheet, not inline CSS. But it also needlessly limits the developer to think about component styles in an isolated way, which doesn't usually reflect the reality of the design you're building from. I've experienced firsthand that using CSS modules leads to a lot of code repetition, where page elements that appear stylistically unified are actually being rendered by duplicated CSS properties applied to virtually identical markup that happens to live in different components.
 
 Another headache of styling with CSS modules is that there's no clear mapping between your markup and your JSX when you pop open dev tools to look at your app under the hood. The JSX is referencing class names by key on the `styles` object you imported, but that key doesn't match the rendered class name in the DOM, so it's your brain that gets to parse out all those dashes and hashes to determine which `div` got the container class. Good luck!
@@ -93,7 +102,7 @@ const Nametag = styled.h3`
 `;
 
 const padding = css`
-  padding: '0 20px';
+  padding: 0 20px;
 `;
 
 const Bio = ({ nametag, leadline }) => {
@@ -129,6 +138,15 @@ What you end with in the browser is a bunch of `style` tags that correspond to e
     padding: '0 20px';
   }
 </style>
+```
+
+And markup that looks like this:
+
+```html
+<div class="css-oaang6-Container e1vt4fp0">
+  <h3 class="css-yvqipt-Nametag e1vt4fp1">Dan DeWald</h3>
+  <p class="css-f74j69-padding">creative, unconventional thinker</p>
+</div>
 ```
 
 I'm impressed by the smartness of this approach and especially appreciate the vendor prefixing for the `Container` class. Where I'm skeptical is when I try to picture how I'd use this to organize a higher level vision for a presentation layer. Furthermore, it deeply couples your app's design and functionality, since everything lives in JavaScript.
@@ -253,13 +271,13 @@ Apologies for being so emphatic, but everything about this is wrong. It obscures
 
 To pull this kind of thing off, CSS property values must be captured in strings. But CSS thinks in primatives that weren't conceived with a JavaScript compile step in mind. And those CSS primatives are awesome! Why deprive yourself of them by writing CSS in strings, enforcing yet another layer of abstraction on yourself in a toolchain that's already way too abstract? The same is true of camel-case to dash-case. CSS selectors are typically written in dash-case or snake-case, and JavaScript in camel-case. While yes, template literals do make it so you can move around chunks of CSS in its intended syntax, those chunks can't be parsed the way existing CSS pre- and post-processors can parse them. It appears you can't have it both ways: if you want styles as data, scoped to a component at run time, you need to use string-based property values. Otherwise, you can write floating chunks of CSS in template literals that look more like CSS, but are basically useless from a programmatic perspective once run time begins.
 
-### The best of both worlds
+### Just leave JS out of it
 
-Consider a separate and distinct presentation layer composed with Sass that establishes a set of base variables, placeholders, mixins and functions which form the totality of your site's design spec. It then pulls in component-specific Sass partials via `import`. These partials can live side by side with your components, just like with CSS modules, but because they're imported after your base Sass, you can use all those Sass utilities, and `@extend` base classes easily within them. This setup is nothing new. It's battle tested, and has at least the potential for the kind of composibility that can make medium-to-big, complex projects easier to reason about, and its the best of both worlds: your styles get to live side by side with the components they're dressing up, but they're globally aware of your base styles as well.
+With a separate and distinct presentation layer using a pre- or post-processor like Sass, you would establish a set of base rules and utilities, e.g., variables, placeholders, mixins, functions, which would form the totality of your site's design spec. A central `.scss` or `.css` file would then pull in component-specific Sass partials via `import`. These partials can live side by side with your components, just like with CSS modules, but because they're imported after your base Sass, you can use all those Sass utilities, and `@extend` base classes easily within them. This setup or some variant of it is nothing new. It's battle tested, and has at least the potential for the kind of composibility that can make even big,complex projects easier to reason about. I would even say it captures aspects of the CSS-in-JS world, in that your styles get to live side by side with the components they're dressing up, but they're globally aware of your base styles as well.
+
+`src/styles/main.scss`
 
 ```scss
-// src/styles/main.scss
-
 $blue: #0090c4;
 $sand: #ffe599ff;
 $white: #fcfafaff;
@@ -285,18 +303,18 @@ $text-xxl: 44px;
 import './component-styles';
 ```
 
-```scss
-// src/styles/component-styles/_index.scss
+`src/styles/component-styles/_index.scss`
 
-import './../../src/components/bio';
-import './../../src/components/image';
-import './../../src/components/footer';
-// etc!
+```scss
+import './../../src/components/bio/styles';
+import './../../src/components/image/styles';
+import './../../src/components/footer/styles';
+import './../../src/components/all-the-things/styles';
 ```
 
 In your partials, compose small custom rules that take advantage of everything in scope from `main.scss` by way of the import:
 
-**src/components/bio/\_index.scss**
+`src/components/bio/styles/_index.scss`
 
 ```scss
 .profile {
@@ -314,7 +332,7 @@ In your partials, compose small custom rules that take advantage of everything i
 
 Then finally hook into the styles with simple class names in React.
 
-**src/components/bio/index.js**
+`src/components/bio/index.js`
 
 ```jsx
 import React from 'react';
@@ -331,8 +349,12 @@ const Bio = ({ nametag, leadline }) => (
 export default Bio;
 ```
 
-What you don't have easily here is protection against naming collisions. However, I've worked on some pretty big sites where a lot of developers are writing styles at the same time, and I can't think of a single time we encountered a naming collision. However, if it's a risk you're freaked out about, with a little finagling you could use some Webpack plugins to add hashing. Webpack could also help you break up your monolithic stylesheet into smaller pieces, with the end result being not too terribly unlike what CSS modules can do.
+Yes, with a set up like this you have to deal with the dark and scary cascade. But, if your CSS architecture is sensible, it'll mostly be like a funnel, where the base rules are the most declaration-heavy, and the imported partials are lightweight, handling component-specific tweaks and blocking unwanted inheritance here and there.
+
+What you don't have easily here is protection against naming collisions. However, I've worked on some pretty big sites where a lot of developers are writing styles at the same time, and I can't think of a single time we encountered a naming collision. If it's a risk you're freaked out about, with a little finagling you could use some Webpack plugins to add hashing. Webpack could also help you break up your monolithic stylesheet into smaller pieces, with the end result being not too terribly unlike what CSS modules can do.
 
 ### Takeaway
 
-I also see these techniques actively enabling less experienced engineers who are just starting out to never get a strong command of CSS and how much easier writing good CSS can make your life, and how good and flexible it can make your app. That's a real shame because it makes their lives harder in the long run not to be exposed to perfectly efficient and time-tested CSS strategies. The more we're exposed to good design of any kind, even the "old," the more our design creativity grows and the better we are at coming up with solutions to all kinds of problems we encounter
+With CSS-in-JS techniques I think you end up paying a high price and not getting that much in return. Life gets more complicated when the opposite was supposed to happen. On the other hand, if you're working on a project with people who don't care how dumb and repetitive their CSS is so long as team members can ship new components as quickly as possible, then CSS-in-JS makes a lot of sense. After all, it fits perfectly into the _everything is a component_ dogma that defines the field of frontend right now.
+
+Maybe the ideal toolchain is one that allows you to use centrally defined pre- and post-processor goodies globally and within CSS modules. I'm sure folks are doing that right now.
