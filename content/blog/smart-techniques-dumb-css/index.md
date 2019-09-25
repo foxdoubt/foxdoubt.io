@@ -10,7 +10,7 @@ The arguments for a separate and distinct presentation layer as the gold standar
 
 ### Quick Overview of Some Common CSS-in-JS techniques
 
-#### **css modules**
+<h4 class="blog-subtitle uppercase bold">css modules</h4>
 
 Import a `.module.css` file –– which should live close to the React component that's importing it –– and have the selector names available as an object, so you can do things like this:
 
@@ -24,13 +24,13 @@ I find CSS modules to be the least egregious CSS-in-JS technique because the end
 
 Another headache inducing effect of styling with CSS modules is that there's no clear mapping between your markup and your JSX when you pop open dev tools to take a look at your app under the hood. The JSX is referencing class names by key on the `styles` object you imported, but that key doesn't reflect the rendered class name, so it's your brain that gets to parse out all those prepended dashes and hashes to determine which `div` got the container class. Good luck!
 
-#### **Styled Components** and **Emotion**
+<h4 class="blog-subtitle uppercase bold">styled components and emotion</h4>
 
 TODO: Example
 
 I'll admit I am damn smitten by how sleak the Styled Components and Emotion APIs are. The use of tagged template literals and the terse and self-explanatory syntax for composing style-injected components is worth getting excited about. However, they still encourage developers to write dumb CSS. There is no apparent higher level vision for how to organize styles into manageable and predictable patterns the way that separate stylesheets alone do just fine. Furthermore, it deeply couples your app's design and functionality, since everything lives in JavaScript.
 
-#### JSS
+<h4 class="blog-subtitle uppercase bold">JSS</h4>
 
 What's cool about JSS is that it considers the available styling options out there, e.g, Sass, PostCSS, Styled Components, etc., and tries to integrate as much functionality as it can using a lot of what ordinary JavaScript already does. I find their <a href="https://cssinjs.org/from-sass-to-cssinjs" target=_blank>From Sass to CSS-in-JS</a> presentation especially thought-provoking because I never thought about how many of Sass's fuctionalities can be virtually replicated using vanilla JavaScript.
 

@@ -93,7 +93,6 @@ h1 {
 
 p {
   font-family: "Open Sans", sans-serif;
-  font-size: $article-content-font-size;
 }
 
 a {
@@ -343,6 +342,10 @@ img {
 
 .content-container {
   background: $desert-white;
+  padding: 0 $content-space-sm;
+  .blog-title {
+    font-weight: 600;
+  }
   .blog-title,
   .blog-subtitle {
     margin: $content-space-sm 0;
@@ -354,7 +357,7 @@ img {
   }
   p {
     &:not(:first-child) {
-      margin-top: $content-space-xs;
+      margin-top: $content-space-sm;
     }
   }
 }

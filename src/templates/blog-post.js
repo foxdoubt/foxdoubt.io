@@ -32,7 +32,7 @@ class BlogPostTemplate extends React.Component {
             </p>
           </div>
         </header>
-        <div className='content-container padding-sm'>
+        <div className='content-container'>
           <section dangerouslySetInnerHTML={{ __html: post.html }} />
         </div>
       </Layout>
