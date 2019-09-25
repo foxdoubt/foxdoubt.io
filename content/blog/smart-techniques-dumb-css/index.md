@@ -6,6 +6,8 @@ description: 'CSS with pre and post processors is still powerful and elegant in 
 
 At work, I stepped away from developing for the browser for about a year. When I came back to it recently to build this blog, I was surprised by how rapidly the community had adopted CSS-in-JS techniques. There's a sense that it's the right way to style your app now, but I've been having a lot of trouble getting on board. It feels wrong to me to be mainstreaming a design approach that begins with the premise that inline CSS is okay. Five years ago, the general consensus was the opposite: inline CSS was considered very, very not okay. It was considered inefficient, confusing, wasteful and not scalable. It was the very definition of "hard coding" in frontend development. Folks have tried to sell me that composability via frameworks like React and Vue change this earlier paradigm, but I'm not convinced. Making your computer apply the same dumb styles to page elements very quickly doesn't make the underlying approach any smarter.
 
+**Important distinction**: there's a difference between inlining chunks of CSS in a document `head` with `style` tags as part of your build process, and writing them directly into HTML elements via React. I don't take issue with a browser-ready page inlining styles in the `head`. Gatsby does this by default. What I mean by inline styles is more generally inlining as a design pattern, encouraged by tools like Styled Components and Emotion (sorry to pick on these. There are tons more, but these are the most visible as a Gatsby fan like myself).
+
 The arguments for a separate and distinct presentation layer as the gold standard for styling a web app are as sound today as they were five or ten years ago. After all, leaning smartly on global stylesheets organized into sensible, predictably named rules that utilize the cascade to keep code DRY is where CSS really shines. Throw a good preprocessor like Sass into the equation and you can start composing truly elegant, powerful and flexible design systems that don't have to get entangled in your application JavaScript to work.
 
 ### Quick Overview of Some Common CSS-in-JS techniques
@@ -72,16 +74,125 @@ Another headache of styling with CSS modules is that there's no clear mapping be
 
 <h4 class="blog-subtitle uppercase bold">styled components and emotion</h4>
 
-TODO: Example
+I'll admit I am damn smitten by how sleak the <a href="https://www.styled-components.com/" target=_blank>Styled Components</a> and <a href="https://emotion.sh/docs/introduction" target=_blank>Emotion</a> APIs are. The use of tagged template literals and the terse and self-explanatory syntax for composing style-injected components is worth getting excited about. However, they still encourage developers to write dumb CSS.
 
-I'll admit I am damn smitten by how sleak the Styled Components and Emotion APIs are. The use of tagged template literals and the terse and self-explanatory syntax for composing style-injected components is worth getting excited about. However, they still encourage developers to write dumb CSS. There is no apparent higher level vision for how to organize styles into manageable and predictable patterns the way that separate stylesheets alone do just fine. Furthermore, it deeply couples your app's design and functionality, since everything lives in JavaScript.
+**NOTE**: The following example is massively simplified, and demonstrates only one possible way to use the emotion API, which has a lot of different expressions. I'll spare an example using Styled Components, because the API works basically the same way as `@emotion/styled` does:
+
+```jsx
+// bio.jsx
+
+import React from 'react';
+import styled from '@emotion/styled';
+import { css } from '@emotion/core';
+const Container = styled.div`
+  display: flex;
+`;
+
+const Nametag = styled.h3`
+  color: red;
+`;
+
+const padding = css`
+  padding: '0 20px';
+`;
+
+const Bio = ({ nametag, leadline }) => {
+  return (
+    <Container>
+      <Nametag>{nametag}</Nametag>
+      <p css={padding}>{leadline}</p>
+    </Container>
+  );
+};
+
+export default Bio;
+```
+
+What you end with in the browser is a bunch of `style` tags that correspond to each of the template tags you used in your component:
+
+```html
+<style data-emotion="css">
+  .css-oaang6-Container {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+  }
+</style>
+<style data-emotion="css">
+  .css-yvqipt-Nametag {
+    color: red;
+  }
+</style>
+<style data-emotion="css">
+  .css-f74j69-padding {
+    padding: '0 20px';
+  }
+</style>
+```
+
+I'm impressed by the smartness of this approach and especially appreciate the vendor prefixing for the `Container` class. Where I'm skeptical is when I try to picture how I'd use this to organize a higher level vision for a presentation layer. Furthermore, it deeply couples your app's design and functionality, since everything lives in JavaScript.
 
 <h4 class="blog-subtitle uppercase bold">JSS</h4>
 
-What's cool about JSS is that it considers the available styling options out there, e.g, Sass, PostCSS, Styled Components, etc., and tries to integrate as much functionality as it can using a lot of what ordinary JavaScript already does. I find their <a href="https://cssinjs.org/from-sass-to-cssinjs" target=_blank>From Sass to CSS-in-JS</a> presentation especially thought-provoking because I never thought about how many of Sass's fuctionalities can be virtually replicated using vanilla JavaScript.
+What's cool about <a href="https://cssinjs.org" target=_blank>JSS</a> is that it considers the available styling options out there, e.g, Sass, PostCSS, Styled Components, etc., and tries to integrate as much of those functionalities as it can via an impressive plugin ecosystem. I find their <a href="https://cssinjs.org/from-sass-to-cssinjs" target=_blank>From Sass to CSS-in-JS</a> presentation especially thought-provoking because I never thought about how many CSS pre- and post-processor fuctionalities can be virtually replicated using just plain JavaScript.
 
+The API is quite extensive, but approaching styling the bio, as we did above for the other examples, you could write the styles in plain JavaScript and inject them into the DOM with `createUseStyles` from `react-jss`:
+
+```jsx
+import React from 'react';
+import { createUseStyles } from 'react-jss';
+
+const useStyles = createUseStyles({
+  container: {
+    display: 'flex'
+  },
+  nametag: {
+    color: 'red'
+  },
+  leadline: {
+    padding: '0 20px'
+  }
+});
+
+const Bio = ({ nametag, leadline }) => {
+  const classes = useStyles();
+  return (
+    <div className={classes.container}>
+      <h3 className={classes.nametag}>{nametag}</h3>
+      <p className={classes.leadline}>{leadline}</p>
+    </div>
+  );
+};
+
+export default Bio;
 ```
-JSS example
+
+Like Emotion and Styled Components, this is what ends up in the DOM:
+
+```html
+<head>
+  <style data-jss="" data-meta="Unthemed">
+    .container-0-2-1 {
+      display: flex;
+    }
+    .nametag-0-2-2 {
+      color: red;
+    }
+    .leadline-0-2-3 {
+      padding: 0 20px;
+    }
+  </style>
+</head>
+```
+
+And the markup itself
+
+```html
+<div class="container-0-2-1">
+  <h3 class="nametag-0-2-2">Dan DeWald</h3>
+  <p class="leadline-0-2-3">creative, unconventional thinker</p>
+</div>
 ```
 
 Since JSS has a whole plugin ecosystem, you can mix and match the types of CSS-in-JS you want for your project, which varies from Sass-like add-ons to functions that have APIs which give you Styled Component-like functionality. With example like this... I think, trying to accommodate the need for a composable and independent presentation layer for an application. But it still feels like unnecessary effort.
