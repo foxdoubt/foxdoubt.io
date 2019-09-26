@@ -146,6 +146,12 @@ img {
 
 .padding-sm {
   padding: $content-space-sm;
+  &-sides {
+    padding: 0 $content-space-sm;
+  }
+  &-bottom {
+    padding-bottom: $content-space-sm;
+  }
 }
 
 .padding-top {
@@ -169,6 +175,15 @@ img {
 
 .sm-margin {
   margin: $content-space-sm;
+  &-left {
+    margin-left: $content-space-sm;
+  }
+  &-sides {
+    margin: 0 $content-space-sm;
+  }
+  &-bottom {
+    margin-bottom: $content-space-sm;
+  }
 }
 
 .md-margin {
@@ -476,4 +491,5 @@ img {
   }
 }
 
+@import "./vendor/GifPlayer.scss";
 @import "../components/bio";

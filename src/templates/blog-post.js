@@ -1,5 +1,7 @@
 import React from 'react';
 import { graphql } from 'gatsby';
+// import Img from 'gatsby-image';
+import GifPlayer from 'react-gif-player';
 
 import Layout from '../components/layout';
 import SEO from '../components/seo';
@@ -15,7 +17,7 @@ class BlogPostTemplate extends React.Component {
           description={post.frontmatter.description || post.excerpt}
         />
 
-        <header className='flex flex-column padding-sm padding-top-md'>
+        <header className='flex flex-column sm-margin-left'>
           <div className='flex'>
             <div className='flex blue-underline'>
               <h1 className='align-self-flex-end capitalize'>
@@ -32,6 +34,13 @@ class BlogPostTemplate extends React.Component {
             </p>
           </div>
         </header>
+
+        <GifPlayer
+          gif={post.frontmatter.featuredGif.publicURL}
+          still={post.frontmatter.featuredImage.childImageSharp.fluid.src}
+          className='padding-sm-sides padding-sm-bottom'
+        />
+
         <div className='content-container'>
           <section dangerouslySetInnerHTML={{ __html: post.html }} />
         </div>
@@ -58,6 +67,16 @@ export const pageQuery = graphql`
         title
         date(formatString: "MMMM DD, YYYY")
         description
+        featuredImage {
+          childImageSharp {
+            fluid(maxWidth: 800) {
+              ...GatsbyImageSharpFluid
+            }
+          }
+        }
+        featuredGif {
+          publicURL
+        }
       }
     }
   }
