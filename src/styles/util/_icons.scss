@@ -1,0 +1,8 @@
+.icon-cactus {
+  @include icon($url: "../images/icons/homemade-cactus.svg", $height: 75px);
+}
+
+.icon-fox {
+  @include icon("../images/icons/homemade-foxdoubt.svg", 40px);
+  background-position: center;
+}
