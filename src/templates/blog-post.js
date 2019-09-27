@@ -1,10 +1,10 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-// import Img from 'gatsby-image';
-import GifPlayer from 'react-gif-player';
-
 import Layout from '../components/layout';
 import SEO from '../components/seo';
+
+const GifPlayer =
+  typeof window !== 'undefined' ? require('react-gif-player') : null;
 
 class BlogPostTemplate extends React.Component {
   render() {
@@ -35,11 +35,13 @@ class BlogPostTemplate extends React.Component {
           </div>
         </header>
 
-        <GifPlayer
-          gif={post.frontmatter.featuredGif.publicURL}
-          still={post.frontmatter.featuredImage.childImageSharp.fluid.src}
-          className='padding-sm-sides padding-sm-bottom'
-        />
+        {GifPlayer && (
+          <GifPlayer
+            gif={post.frontmatter.featuredGif.publicURL}
+            still={post.frontmatter.featuredImage.childImageSharp.fluid.src}
+            className='padding-sm-sides padding-sm-bottom'
+          />
+        )}
 
         <div className='content-container'>
           <section dangerouslySetInnerHTML={{ __html: post.html }} />
