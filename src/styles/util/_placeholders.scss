@@ -1,0 +1,9 @@
+%uppercase-small {
+  text-transform: uppercase;
+  font-size: $article-content-font-size-xs;
+}
+
+%uppercase-xs {
+  text-transform: uppercase;
+  font-size: $article-content-font-size-sm;
+}

@@ -1,0 +1,19 @@
+@mixin tablet {
+  @media (min-width: $tablet-width) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: $desktop-width) {
+    @content;
+  }
+}
+
+@mixin icon($url, $background-size: $icon-background-size, $width: $icon-width, $height: $icon-height) {
+  width: $width;
+  height: $height;
+  background-repeat: no-repeat;
+  background-size: $background-size;
+  background-image: url("#{$url}");
+}
