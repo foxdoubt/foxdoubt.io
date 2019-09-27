@@ -37,11 +37,12 @@ class BlogPostTemplate extends React.Component {
     );
     if (this.state.showGif) {
       leadArtHtml = (
-        <GifPlayer
-          gif={post.frontmatter.featuredGif.publicURL}
-          still={post.frontmatter.featuredImage.childImageSharp.fluid.src}
-          className='padding-sm-sides padding-sm-bottom'
-        />
+        <div className='padding-sm-sides padding-sm-bottom relative'>
+          <GifPlayer
+            gif={post.frontmatter.featuredGif.publicURL}
+            still={post.frontmatter.featuredImage.childImageSharp.fluid.src}
+          />
+        </div>
       );
     }
     return (

@@ -29,15 +29,22 @@ $gif_btn_text_content: "GIF" !default;
 
 .gif_player {
   display: block;
-  position: relative;
   user-select: none;
   -webkit-touch-callout: none;
   -webkit-tap-highlight-color: transparent;
 
   .play_button {
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 35%;
+    left: 40%;
+    @media screen and (min-width: 450px) and (max-width: $tablet-width) {
+      top: 35%;
+      left: 45%;
+    }
+    @include tablet {
+      top: 40%;
+      left: 45%;
+    }
     border-radius: 50%;
     background-color: $gif_btn_bg_color;
     border: $gif_btn_border_width $gif_btn_border_style $gif_btn_border_color;
@@ -48,8 +55,7 @@ $gif_btn_text_content: "GIF" !default;
     font-size: 24px;
     opacity: $gif_btn_regular_opacity;
     padding: 14px;
-    transform: translate(-50%, -50%) scale(1) rotate($gif_btn_paused_rotation);
-    transition: transform $gif_btn_transition_duration, opacity $gif_btn_transition_duration;
+    animation: fadein 0.7s ease;
 
     &:hover {
       background-color: $gif_btn_bg_color_hover;
@@ -62,8 +68,8 @@ $gif_btn_text_content: "GIF" !default;
   }
 
   &.playing .play_button {
-    transform: translate(-50%, -50%) scale(0) rotate($gif_btn_playing_rotation);
-    opacity: $gif_btn_playing_opacity;
+    transition: all 0.5s ease;
+    opacity: 0;
   }
 
   img {
