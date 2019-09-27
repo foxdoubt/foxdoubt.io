@@ -1,0 +1,64 @@
+.site-navigation-sticker {
+  background-color: $desert-white;
+  h1,
+  h3 {
+    font-size: $h3-heading-font-size;
+    a {
+      color: $black;
+      &:visited {
+        color: $black;
+      }
+    }
+  }
+}
+
+.page-container {
+  margin: 0 auto;
+  max-width: $page-content-max-width;
+}
+
+.main-container {
+  min-height: 100vh;
+  margin: 0 $content-space-sm;
+  // this 'padding bottom' is a hack
+  // on mobile, the fixed footer is swallowing blog content
+  // and doesn't seem to respond to margin
+  // however a single pixel computed for a padding bottom
+  // generates several pixels of space for mobile Chrome and Safari on
+  // IOS. I have no idea why
+  padding-bottom: 1px;
+  @include tablet {
+    margin-left: $content-space-md;
+  }
+  .main-left {
+    background-color: $desert-white;
+    min-height: 100vh;
+    margin-bottom: ($footer-height * 2);
+    @include tablet {
+      margin-right: $content-space-xs;
+      margin-bottom: 0;
+      border-bottom: 1px solid $light-gray;
+    }
+  }
+}
+
+.foxdoubt-nav {
+  display: none;
+  @include tablet {
+    display: initial;
+    min-width: 250px;
+    width: 100%;
+    max-width: 275px;
+    padding: $content-space-xs;
+    height: 100%;
+    position: sticky;
+    top: 0;
+    .nav-more-posts-container {
+      background-color: $desert-white;
+      margin-top: $content-space-sm;
+      a {
+        color: $black;
+      }
+    }
+  }
+}

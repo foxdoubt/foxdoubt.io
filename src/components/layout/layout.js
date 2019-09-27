@@ -1,46 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import { Link, StaticQuery, graphql } from 'gatsby';
-
-const PostPreview = ({ postData, forFooterNav = false }) => {
-  let itemClasses;
-  let dividerHtml = <hr className='horizontal-divider' />;
-  let headerHtml = (
-    <Fragment>
-      <div class={`card`}>
-        <p className='bold uppercase'>posts</p>
-      </div>
-      {dividerHtml}
-    </Fragment>
-  );
-  if (forFooterNav) {
-    headerHtml = null;
-    dividerHtml = null;
-    itemClasses = 'capitalize color-content justify-center';
-  }
-  return (
-    <div className={`nav-more-posts-container sm-padding`}>
-      {headerHtml}
-      {dividerHtml}
-      {postData &&
-        postData.map((post, i) => {
-          const horizontalDivider =
-            i !== postData.length - 1 ? dividerHtml : null;
-          const postTitle = post.node.frontmatter.title;
-          const { slug } = post.node.fields;
-          return (
-            <Fragment>
-              <div className={`card${' ' + itemClasses}`}>
-                <Link className='color-content' to={slug}>
-                  {postTitle}
-                </Link>
-              </div>
-              {horizontalDivider}
-            </Fragment>
-          );
-        })}
-    </div>
-  );
-};
+import Footer from './footer';
+import PostPreview from './post-preview';
 
 const TabletSidebar = ({ postData, header, siteNavigation }) => {
   const dividerHtml = <p className='color-desert-sky-dusk capitalize'>|</p>;
@@ -142,13 +103,6 @@ const Layout = props => {
           );
           homeNavHtml = null;
         }
-        const footerNavBtnHtml = (
-          <p
-            onClick={() => setFooterNavState(!isFooterNavActive)}
-            className={`bold italic${isFooterNavActive ? ' active' : ''}`}>
-            {isFooterNavActive ? 'hide posts' : 'show posts'}
-          </p>
-        );
 
         return (
           <React.Fragment>
@@ -161,40 +115,23 @@ const Layout = props => {
                   siteNavigation={siteNavigation}
                 />
               </div>
-              <footer className='footer uppercase flex-tablet align-center-tablet'>
-                <div
-                  className={`nav footer-nav-modal${
-                    isFooterNavActive ? ' active' : ''
-                  }`}>
-                  <div className='footer-nav-items-container'>
-                    <div className='nav-site-options-container'>
-                      <div className='flex padding-sm'>
-                        {homeNavHtml}
-                        {siteNavigation.map((navItem, i) => {
-                          const classes =
-                            i === siteNavigation.length - 1 ? 'flex-1' : '';
-                          return (
-                            <Link
-                              className={'color-content ' + classes}
-                              to={navItem.slug}>
-                              {navItem.name}
-                            </Link>
-                          );
-                        })}
-                        {footerNavBtnHtml}
-                      </div>
-                      <PostPreview postData={edges} forFooterNav={true} />
-                    </div>
-                  </div>
-                  <div className='modal-cover'></div>
-                </div>
-
-                <div className='copyright-container'>
-                  <p className='copyright-content'>{`copyright ${String.fromCharCode(
-                    169
-                  )} 2019 foxdoubt`}</p>
-                </div>
-              </footer>
+              <Footer
+                isActive={isFooterNavActive}
+                setState={setFooterNavState}
+                postPreviewData={edges}>
+                {homeNavHtml}
+                {siteNavigation.map((navItem, i) => {
+                  const classes =
+                    i === siteNavigation.length - 1 ? 'flex-1' : '';
+                  return (
+                    <Link
+                      className={'color-content ' + classes}
+                      to={navItem.slug}>
+                      {navItem.name}
+                    </Link>
+                  );
+                })}
+              </Footer>
             </div>
           </React.Fragment>
         );
