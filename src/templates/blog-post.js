@@ -2,14 +2,48 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import Layout from '../components/layout/layout';
 import SEO from '../components/seo';
+import Img from 'gatsby-image';
 
 const GifPlayer =
   typeof window !== 'undefined' ? require('react-gif-player') : null;
 
 class BlogPostTemplate extends React.Component {
+  constructor(props) {
+    super(props);
+    const {
+      data: { markdownRemark: post }
+    } = props;
+    this.state = {
+      hasGif: !!(post.frontmatter && post.frontmatter.featuredGif),
+      showGif: null
+    };
+  }
+  handleGif = () => {
+    if (GifPlayer && this.state.hasGif) {
+      this.setState({ showGif: true });
+    }
+  };
+
   render() {
     const post = this.props.data.markdownRemark;
     const { title } = this.props.data.site.siteMetadata;
+    let leadArtHtml = (
+      <div className='padding-sm-sides padding-sm-bottom'>
+        <Img
+          fluid={post.frontmatter.featuredImage.childImageSharp.fluid}
+          onLoad={this.handleGif}
+        />
+      </div>
+    );
+    if (this.state.showGif) {
+      leadArtHtml = (
+        <GifPlayer
+          gif={post.frontmatter.featuredGif.publicURL}
+          still={post.frontmatter.featuredImage.childImageSharp.fluid.src}
+          className='padding-sm-sides padding-sm-bottom'
+        />
+      );
+    }
     return (
       <Layout location={this.props.location}>
         <SEO
@@ -35,13 +69,7 @@ class BlogPostTemplate extends React.Component {
           </div>
         </header>
 
-        {GifPlayer && (
-          <GifPlayer
-            gif={post.frontmatter.featuredGif.publicURL}
-            still={post.frontmatter.featuredImage.childImageSharp.fluid.src}
-            className='padding-sm-sides padding-sm-bottom'
-          />
-        )}
+        {leadArtHtml}
 
         <div className='content-container'>
           <section dangerouslySetInnerHTML={{ __html: post.html }} />

@@ -35,19 +35,19 @@ $gif_btn_text_content: "GIF" !default;
   -webkit-tap-highlight-color: transparent;
 
   .play_button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
     background-color: $gif_btn_bg_color;
     border: $gif_btn_border_width $gif_btn_border_style $gif_btn_border_color;
-    border-radius: 50%;
     box-shadow: 0 0 0 3px $gif_btn_box_shadow_color;
     color: $gif_btn_text_color;
     cursor: pointer;
     font-family: $gif_btn_font_family;
     font-size: 24px;
-    left: 50%;
     opacity: $gif_btn_regular_opacity;
     padding: 14px;
-    position: absolute;
-    top: 50%;
     transform: translate(-50%, -50%) scale(1) rotate($gif_btn_paused_rotation);
     transition: transform $gif_btn_transition_duration, opacity $gif_btn_transition_duration;
 
