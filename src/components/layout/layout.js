@@ -2,38 +2,7 @@ import React, { Fragment, useState } from 'react';
 import { Link, StaticQuery, graphql } from 'gatsby';
 import Footer from './footer';
 import PostPreview from './post-preview';
-
-const TabletSidebar = ({ postData, header, siteNavigation }) => {
-  const dividerHtml = <p className='color-desert-sky-dusk capitalize'>|</p>;
-  return (
-    <nav className='foxdoubt-nav'>
-      <div className='site-navigation-sticker flex align-center justify-center'>
-        <div className='flex flex-1 justify-space-evenly align-center'>
-          {header}
-          {dividerHtml}
-          {siteNavigation.map((navItem, i) => {
-            if (navItem.name !== 'home') {
-              const divider =
-                i !== siteNavigation.length - 1 ? dividerHtml : null;
-              const navItemHtml = (
-                <Fragment>
-                  <Link className='uppercase' to={navItem.slug}>
-                    {navItem.name}
-                  </Link>
-                  {divider}
-                </Fragment>
-              );
-              return navItemHtml;
-            }
-            return null;
-          })}
-        </div>
-        <div className='icon-fox'></div>
-      </div>
-      <PostPreview postData={postData} />
-    </nav>
-  );
-};
+import Sidebar from './sidebar';
 
 const Layout = props => {
   const [isFooterNavActive, setFooterNavState] = useState(false);
@@ -109,11 +78,9 @@ const Layout = props => {
             <div className='page-container'>
               <div className='main-container flex-tablet'>
                 <main className='main-left'>{children}</main>
-                <TabletSidebar
-                  postData={edges ? edges : null}
-                  header={header}
-                  siteNavigation={siteNavigation}
-                />
+                <Sidebar header={header} siteNavigation={siteNavigation}>
+                  <PostPreview postData={edges ? edges : null} />
+                </Sidebar>
               </div>
               <Footer
                 isActive={isFooterNavActive}
