@@ -1,0 +1,41 @@
+todo 
+
+testing locally on my iphone I need `gatsby develop -H 192.168.0.4 -p 8000`
+
+LIVE SITE todo
+==============
+- more .main-left margin bottom space to clear fixed footer
+
+
+Completed
+=========
+X setup sass
+X integrate helmet
+X integrate svg images
+X set up linters (sasslint)
+X finish styling home page mobile
+X finish styling homepage desktop 
+ X figure out how to design sidebar
+ X figure out whether or not to ditch the top banner
+ X make sure the fullscreen version widens evenly on both sides
+ X make the mobile nav pull up thing
+X design my 404 page
+X finish styling blog template (mobile and desktop)
+ 
+NEXT UP  
+=======
+- get some social media icons
+- write first blog
+- do an accessibility audit
+- buy domain and host somewhere
+
+
+
+- include custom paths for URLs
+- make react dev errors and warnings go away
+- refactor global scss (modularize, use partials syntax, trim down by seeing what isn't having an effect)
+- add punctuation to bio blurb markdown
+- rename the props of the tablet sidebar to be more readable/understandable, generally clean up react
+-- figure out how to omit content that's not blog content from ending up in the sidebar
+ -- limit to like ~ 6 posts, something that will work with the current design
+ -- that secondary nav for paging through blogs is nice, let's style that as well
