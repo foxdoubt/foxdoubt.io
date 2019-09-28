@@ -3,11 +3,15 @@
     margin-bottom: 0;
   }
   .avatar-container {
-    width: 35%;
     margin: $content-space-sm 0 0 $content-space-sm;
+    min-width: 35%;
     .avatar {
-      margin: 0 auto;
+      min-height: $dewald-avatar-height-mobile;
+      @include tablet {
+        min-height: $dewald-avatar-height;
+      }
     }
+    background: $desert-sky-dusk;
   }
   .nametag-container {
     width: 65%;
