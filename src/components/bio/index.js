@@ -4,7 +4,7 @@ import avatar from '../../images/icons/dewald-avatar.svg';
 const Bio = ({ nametag, leadline, avatarSrc = avatar }) => {
   return (
     <div className='flex profile'>
-      <div className='avatar-container bg-desert-sky-dusk'>
+      <div className='avatar-container'>
         <img className='avatar' src={avatarSrc} alt='Dan DeWald avatar' />
       </div>
       <div className='flex flex-column justify-space-evenly sm-padding nametag-container'>
