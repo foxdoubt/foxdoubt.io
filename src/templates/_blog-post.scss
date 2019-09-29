@@ -1,0 +1,44 @@
+.gif {
+  &-playing {
+    background: black;
+    img {
+      width: 100%;
+    }
+  }
+  display: block;
+  user-select: none;
+
+  .play_button {
+    position: absolute;
+    z-index: $low-z-index;
+    top: 35%;
+    left: 40%;
+    @media screen and (min-width: 450px) and (max-width: $tablet-width) {
+      top: 35%;
+      left: 45%;
+    }
+    @include tablet {
+      top: 40%;
+      left: 45%;
+    }
+    border-radius: 50%;
+    background-color: $gif_btn_bg_color;
+    border: $gif_btn_border_width $gif_btn_border_style $gif_btn_border_color;
+    box-shadow: 0 0 0 3px $gif_btn_box_shadow_color;
+    color: $gif_btn_text_color;
+    cursor: pointer;
+    font-family: $gif_btn_font_family;
+    font-size: 24px;
+    opacity: $gif_btn_regular_opacity;
+    padding: 14px;
+
+    &:hover {
+      background-color: $gif_btn_bg_color_hover;
+      box-shadow: 0 0 0 3px $gif_btn_box_shadow_color_hover;
+    }
+
+    &::after {
+      content: $gif_btn_text_content;
+    }
+  }
+}

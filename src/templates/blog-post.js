@@ -13,34 +13,53 @@ class BlogPostTemplate extends React.Component {
     const {
       data: { markdownRemark: post }
     } = props;
+    this.leadArtRef = React.createRef();
     this.state = {
       hasGif: !!(post.frontmatter && post.frontmatter.featuredGif),
-      showGif: null
+      showGif: null,
+      playGif: null,
+      leadArtHeight: null
     };
   }
   handleGif = () => {
     if (GifPlayer && this.state.hasGif) {
-      this.setState({ showGif: true });
+      this.setState({
+        showGif: true,
+        leadArtHeight: this.leadArtRef.current.clientHeight
+      });
     }
+  };
+  playGif = () => {
+    this.setState({
+      playGif: !this.state.playGif
+    });
   };
 
   render() {
     const post = this.props.data.markdownRemark;
     const { title } = this.props.data.site.siteMetadata;
+    const { showGif } = this.state;
     let leadArtHtml = (
-      <div className='padding-sm-sides padding-sm-bottom'>
+      <div
+        ref={this.leadArtRef}
+        className={`sm-margin-sides sm-margin-bottom${
+          showGif ? ' gif relative' : ''
+        }`}>
+        {showGif && <div onClick={this.playGif} className='play_button'></div>}
         <Img
           fluid={post.frontmatter.featuredImage.childImageSharp.fluid}
           onLoad={this.handleGif}
         />
       </div>
     );
-    if (this.state.showGif) {
+    if (this.state.playGif) {
       leadArtHtml = (
-        <div className='padding-sm-sides padding-sm-bottom relative'>
+        <div className='gif-playing sm-margin-sides sm-margin-bottom relative'>
           <GifPlayer
             gif={post.frontmatter.featuredGif.publicURL}
             still={post.frontmatter.featuredImage.childImageSharp.fluid.src}
+            autoplay={this.state.playGif}
+            style={{ height: this.state.leadArtHeight }}
           />
         </div>
       );
