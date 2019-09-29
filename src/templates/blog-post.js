@@ -3,64 +3,67 @@ import { graphql } from 'gatsby';
 import Layout from '../components/layout/layout';
 import SEO from '../components/seo';
 import Img from 'gatsby-image';
+import reduceRatio from '../vendor/aspect-ratio/aspect-ratio';
 
-const GifPlayer =
-  typeof window !== 'undefined' ? require('react-gif-player') : null;
+const GifPlayer = React.lazy(() => import('../vendor/react-gif-player'));
+const isSSR = typeof window === 'undefined';
 
 class BlogPostTemplate extends React.Component {
   constructor(props) {
     super(props);
+    let gifDims = null;
+    let hasGif;
     const {
       data: { markdownRemark: post }
     } = props;
-    this.leadArtRef = React.createRef();
+    if (post.frontmatter) {
+      hasGif = !!post.frontmatter.featuredGif;
+      gifDims = post.frontmatter.featuredGifDimensions || null;
+    }
+
     this.state = {
-      hasGif: !!(post.frontmatter && post.frontmatter.featuredGif),
+      hasGif,
+      gifDims,
       showGif: null,
-      playGif: null,
-      leadArtHeight: null
+      playGif: null
     };
   }
-  handleGif = () => {
-    if (GifPlayer && this.state.hasGif) {
-      this.setState({
-        showGif: true,
-        leadArtHeight: this.leadArtRef.current.clientHeight
-      });
-    }
-  };
-  playGif = () => {
-    this.setState({
-      playGif: !this.state.playGif
-    });
-  };
-
   render() {
     const post = this.props.data.markdownRemark;
     const { title } = this.props.data.site.siteMetadata;
-    const { showGif } = this.state;
-    let leadArtHtml = (
-      <div
-        ref={this.leadArtRef}
-        className={`sm-margin-sides sm-margin-bottom${
-          showGif ? ' gif relative' : ''
-        }`}>
-        {showGif && <div onClick={this.playGif} className='play_button'></div>}
-        <Img
-          fluid={post.frontmatter.featuredImage.childImageSharp.fluid}
-          onLoad={this.handleGif}
-        />
-      </div>
-    );
-    if (this.state.playGif) {
+    let leadArtHtml = null;
+    if (this.state.hasGif) {
+      let aspectRatio = '1-1';
+      try {
+        const parsedGifAspectRatio =
+          this.state.gifDims && JSON.parse(this.state.gifDims);
+
+        aspectRatio = reduceRatio(
+          parsedGifAspectRatio.w,
+          parsedGifAspectRatio.h
+        );
+      } catch (err) {
+        console.log(err);
+      }
+      const gifContainerClasses = `sm-margin-sides sm-margin-bottom aspect-ratio-container-${aspectRatio}`;
+
       leadArtHtml = (
-        <div className='gif-playing sm-margin-sides sm-margin-bottom relative'>
-          <GifPlayer
-            gif={post.frontmatter.featuredGif.publicURL}
-            still={post.frontmatter.featuredImage.childImageSharp.fluid.src}
-            autoplay={this.state.playGif}
-            style={{ height: this.state.leadArtHeight }}
-          />
+        <div className={gifContainerClasses}>
+          {!isSSR && (
+            <React.Suspense fallback={<div />}>
+              <GifPlayer
+                containerClasses='blog-post-featured-gif'
+                gif={post.frontmatter.featuredGif.publicURL}
+                still={post.frontmatter.featuredImage.childImageSharp.fluid.src}
+              />
+            </React.Suspense>
+          )}
+        </div>
+      );
+    } else {
+      leadArtHtml = (
+        <div className='sm-margin-sides sm-margin-bottom'>
+          <Img fluid={post.frontmatter.featuredImage.childImageSharp.fluid} />
         </div>
       );
     }
@@ -127,6 +130,7 @@ export const pageQuery = graphql`
         featuredGif {
           publicURL
         }
+        featuredGifDimensions
       }
     }
   }

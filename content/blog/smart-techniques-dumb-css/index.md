@@ -4,6 +4,7 @@ date: '2019-09-22T19:21:59.819Z'
 description: 'CSS with pre and post processors is still powerful and elegant in the global scope. Its okay not to jam your styles into components with JavaScript'
 featuredImage: './frinkiac-first-frame.png'
 featuredGif: './frinkiac.gif'
+featuredGifDimensions: '{"w": 480, "h": 360}'
 ---
 
 At work, I stepped away from developing for the browser for about a year. When I came back to it recently (to build this blog), I was surprised by how rapidly the frontend community had adopted CSS-in-JS techniques. By CSS-in-JS, I'm not talking about inlining chunks of CSS in the document `head` as part of your build process, but rather those techniques that champion the inlining of style logic inside React components, while largely ignoring the power of CSS globality, i.e., the cascade.
