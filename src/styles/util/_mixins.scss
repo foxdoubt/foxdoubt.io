@@ -1,3 +1,15 @@
+@mixin media-custom($min-width, $max-width) {
+  @if $max-width {
+    @media screen and (min-width: $min-width) and (max-width: $max-width) {
+      @content;
+    }
+  } @else {
+    @media screen and (min-width: $min-width) {
+      @content;
+    }
+  }
+}
+
 @mixin tablet {
   @media (min-width: $tablet-width) {
     @content;
