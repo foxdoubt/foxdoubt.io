@@ -3,7 +3,7 @@ import { graphql } from 'gatsby';
 import Layout from '../components/layout/layout';
 import SEO from '../components/seo';
 import Img from 'gatsby-image';
-import reduceRatio from '../vendor/aspect-ratio/aspect-ratio';
+import { getAspectRatioFromJson } from '../utils/helpers/data-parsing';
 
 const GifPlayer = React.lazy(() => import('../vendor/react-gif-player'));
 const isSSR = typeof window === 'undefined';
@@ -11,21 +11,22 @@ const isSSR = typeof window === 'undefined';
 class BlogPostTemplate extends React.Component {
   constructor(props) {
     super(props);
-    let gifDims = null;
+    let gifAspectRatio = null;
     let hasGif;
     const {
       data: { markdownRemark: post }
     } = props;
     if (post.frontmatter) {
       hasGif = !!post.frontmatter.featuredGif;
-      gifDims = post.frontmatter.featuredGifDimensions || null;
+      gifAspectRatio = getAspectRatioFromJson(
+        post.frontmatter.featuredGifDimensions
+      );
     }
 
     this.state = {
       hasGif,
-      gifDims,
-      showGif: null,
-      playGif: null
+      gifAspectRatio,
+      showGif: null
     };
   }
   render() {
@@ -33,20 +34,7 @@ class BlogPostTemplate extends React.Component {
     const { title } = this.props.data.site.siteMetadata;
     let leadArtHtml = null;
     if (this.state.hasGif) {
-      let aspectRatio = '1-1';
-      try {
-        const parsedGifAspectRatio =
-          this.state.gifDims && JSON.parse(this.state.gifDims);
-
-        aspectRatio = reduceRatio(
-          parsedGifAspectRatio.w,
-          parsedGifAspectRatio.h
-        );
-      } catch (err) {
-        console.log(err);
-      }
-      const gifContainerClasses = `sm-margin-sides sm-margin-bottom aspect-ratio-container-${aspectRatio}`;
-
+      const gifContainerClasses = `sm-margin-sides sm-margin-bottom aspect-ratio-container-${this.state.gifAspectRatio}`;
       leadArtHtml = (
         <div className={gifContainerClasses}>
           {!isSSR && (

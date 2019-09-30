@@ -10,7 +10,7 @@ const GifPlayer = ({
 }) => (
   <div className={`gif_player ${containerClasses}`} onClick={toggle}>
     <div className={`play_button${playing ? ' playing' : ''}`} />
-    <img {...rest} src={playing ? gif || still : still || gif} />
+    <img {...rest} src={playing ? gif || still : still || gif} alt='gif' />
   </div>
 );
 

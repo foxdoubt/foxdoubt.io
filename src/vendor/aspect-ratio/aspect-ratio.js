@@ -1,6 +1,5 @@
 // from: https://andrew.hedges.name/experiments/aspect_ratio/behaviors.js
 export default function reduceRatio(numerator, denominator) {
-  if (numerator === null || denominator === null) return null;
   var gcd, temp, divisor;
 
   // from: http://pages.pacificcoast.net/~cazelais/euclid.html
