@@ -92,6 +92,7 @@ const Layout = props => {
                     i === siteNavigation.length - 1 ? 'flex-1' : '';
                   return (
                     <Link
+                      key={`footer-site-nav-link-${i}`}
                       className={'color-content ' + classes}
                       to={navItem.slug}>
                       {navItem.name}

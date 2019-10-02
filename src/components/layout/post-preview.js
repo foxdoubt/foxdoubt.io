@@ -6,7 +6,7 @@ export default ({ postData, forFooterNav = false }) => {
   let dividerHtml = <hr className='horizontal-divider' />;
   let headerHtml = (
     <Fragment>
-      <div class={`card`}>
+      <div className={`card`}>
         <p className='bold uppercase'>posts</p>
       </div>
       {dividerHtml}
@@ -28,7 +28,7 @@ export default ({ postData, forFooterNav = false }) => {
           const postTitle = post.node.frontmatter.title;
           const { slug } = post.node.fields;
           return (
-            <Fragment>
+            <Fragment key={`post-preview-${i}`}>
               <div className={`card${' ' + itemClasses}`}>
                 <Link className='color-content' to={slug}>
                   {postTitle}

@@ -14,7 +14,7 @@ export default ({ header, siteNavigation, children }) => {
               const divider =
                 i !== siteNavigation.length - 1 ? dividerHtml : null;
               const navItemHtml = (
-                <Fragment>
+                <Fragment key={`sidebar-nav-item-${i}`}>
                   <Link className='uppercase' to={navItem.slug}>
                     {navItem.name}
                   </Link>
