@@ -3,7 +3,7 @@ import { graphql } from 'gatsby';
 import Layout from '../components/layout/layout';
 import SEO from '../components/seo';
 import Img from 'gatsby-image';
-import { getAspectRatioFromJson } from '../utils/helpers/data-parsing';
+import { getAspectRatio } from '../utils/helpers/data-parsing';
 
 const GifPlayer = React.lazy(() => import('../vendor/react-gif-player'));
 const isSSR = typeof window === 'undefined';
@@ -18,9 +18,7 @@ class BlogPostTemplate extends React.Component {
     } = props;
     if (post.frontmatter) {
       hasGif = !!post.frontmatter.featuredGif;
-      gifAspectRatio = getAspectRatioFromJson(
-        post.frontmatter.featuredGifDimensions
-      );
+      gifAspectRatio = getAspectRatio(post.frontmatter.featuredGifAspectRatio);
     }
 
     this.state = {
@@ -118,7 +116,7 @@ export const pageQuery = graphql`
         featuredGif {
           publicURL
         }
-        featuredGifDimensions
+        featuredGifAspectRatio
       }
     }
   }

@@ -1,22 +1,10 @@
-import reduceRatio from '../../vendor/aspect-ratio/aspect-ratio';
+const ACCEPTED_ASPECT_RATIOS = ['1:1', '4:3'];
 
-export const getAspectRatioFromJson = ratioJson => {
+export const getAspectRatio = ratioStr => {
   const defaultRatio = '1-1';
-  if (!ratioJson) return defaultRatio;
-  let final = defaultRatio;
-  try {
-    const parsedRatio = JSON.parse(ratioJson);
-    if (
-      typeof parsedRatio.w === 'number' ||
-      typeof parsedRatio.h === 'number'
-    ) {
-      final = reduceRatio(parsedRatio.w, parsedRatio.h);
-    }
-  } catch (err) {
-    console.error(
-      "There was a problem parsing your image's aspect ratio:",
-      err
-    );
+  if (!ratioStr) return defaultRatio;
+  if (ACCEPTED_ASPECT_RATIOS.indexOf(ratioStr) > -1) {
+    return ratioStr.replace(':', '-');
   }
-  return final;
+  return defaultRatio;
 };
