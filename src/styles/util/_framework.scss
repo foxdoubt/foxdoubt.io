@@ -135,10 +135,24 @@
       display: flex;
     }
   }
-}
-
-.flex-1 {
-  flex: 1;
+  &-1 {
+    flex: 1;
+    &-tablet {
+      flex: initial;
+      @include tablet {
+        flex: 1;
+      }
+    }
+  }
+  &-2 {
+    flex: 2;
+    &-tablet {
+      flex: initial;
+      @include tablet {
+        flex: 2;
+      }
+    }
+  }
 }
 
 .justify-space-evenly {
@@ -173,4 +187,28 @@
 
 .horizontal-divider {
   background-color: $lighter-gray;
+}
+
+.aspect-ratio-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.aspect-ratio-container-1-1 {
+  @extend %aspect-ratio-container-styles;
+  padding-bottom: 100%;
+  img {
+    @extend .aspect-ratio-img;
+  }
+}
+
+.aspect-ratio-container-4-3 {
+  @extend %aspect-ratio-container-styles;
+  padding-bottom: 75%;
+  img {
+    @extend .aspect-ratio-img;
+  }
 }

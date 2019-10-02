@@ -3,11 +3,13 @@ import avatar from '../../images/icons/dewald-avatar.svg';
 
 const Bio = ({ nametag, leadline, avatarSrc = avatar }) => {
   return (
-    <div className='flex profile'>
+    <div className='flex profile sm-margin-sides'>
       <div className='avatar-container'>
-        <img className='avatar' src={avatarSrc} alt='Dan DeWald avatar' />
+        <div className='aspect-ratio-container-1-1 bg-desert-sky-dusk'>
+          <img className='avatar' src={avatar} alt='Dan DeWald avatar' />
+        </div>
       </div>
-      <div className='flex flex-column justify-space-evenly sm-padding nametag-container'>
+      <div className='flex-2-tablet nametag-container'>
         <h3 className='nametag'>{nametag}</h3>
         <p className='block-quote'>{leadline}</p>
       </div>

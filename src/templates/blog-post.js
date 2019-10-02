@@ -3,45 +3,53 @@ import { graphql } from 'gatsby';
 import Layout from '../components/layout/layout';
 import SEO from '../components/seo';
 import Img from 'gatsby-image';
+import { getAspectRatio } from '../utils/helpers/data-parsing';
 
-const GifPlayer =
-  typeof window !== 'undefined' ? require('react-gif-player') : null;
+const GifPlayer = React.lazy(() => import('../vendor/react-gif-player'));
+const isSSR = typeof window === 'undefined';
 
 class BlogPostTemplate extends React.Component {
   constructor(props) {
     super(props);
+    let gifAspectRatio = null;
+    let hasGif;
     const {
       data: { markdownRemark: post }
     } = props;
+    if (post.frontmatter) {
+      hasGif = !!post.frontmatter.featuredGif;
+      gifAspectRatio = getAspectRatio(post.frontmatter.featuredGifAspectRatio);
+    }
+
     this.state = {
-      hasGif: !!(post.frontmatter && post.frontmatter.featuredGif),
+      hasGif,
+      gifAspectRatio,
       showGif: null
     };
   }
-  handleGif = () => {
-    if (GifPlayer && this.state.hasGif) {
-      this.setState({ showGif: true });
-    }
-  };
-
   render() {
     const post = this.props.data.markdownRemark;
     const { title } = this.props.data.site.siteMetadata;
-    let leadArtHtml = (
-      <div className='padding-sm-sides padding-sm-bottom'>
-        <Img
-          fluid={post.frontmatter.featuredImage.childImageSharp.fluid}
-          onLoad={this.handleGif}
-        />
-      </div>
-    );
-    if (this.state.showGif) {
+    let leadArtHtml = null;
+    if (this.state.hasGif) {
+      const gifContainerClasses = `sm-margin-sides sm-margin-bottom aspect-ratio-container-${this.state.gifAspectRatio}`;
       leadArtHtml = (
-        <div className='padding-sm-sides padding-sm-bottom relative'>
-          <GifPlayer
-            gif={post.frontmatter.featuredGif.publicURL}
-            still={post.frontmatter.featuredImage.childImageSharp.fluid.src}
-          />
+        <div className={gifContainerClasses}>
+          {!isSSR && (
+            <React.Suspense fallback={<div />}>
+              <GifPlayer
+                containerClasses='blog-post-featured-gif'
+                gif={post.frontmatter.featuredGif.publicURL}
+                still={post.frontmatter.featuredImage.childImageSharp.fluid.src}
+              />
+            </React.Suspense>
+          )}
+        </div>
+      );
+    } else {
+      leadArtHtml = (
+        <div className='sm-margin-sides sm-margin-bottom'>
+          <Img fluid={post.frontmatter.featuredImage.childImageSharp.fluid} />
         </div>
       );
     }
@@ -108,6 +116,7 @@ export const pageQuery = graphql`
         featuredGif {
           publicURL
         }
+        featuredGifAspectRatio
       }
     }
   }

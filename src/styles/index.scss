@@ -2,6 +2,7 @@
 @import "./util/variables";
 @import "./util/mixins";
 @import "./util/placeholders";
+
 @import "./util/framework";
 @import "./util/icons";
 @import "./util/animations";
@@ -82,3 +83,4 @@ img {
 @import "./vendor/GifPlayer.scss";
 @import "../components/bio/bio";
 @import "../components/layout/layout";
+@import "../templates/blog-post";

@@ -31,10 +31,10 @@
     "prismjs": "^1.17.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "react-gif-player": "0.4.2",
     "react-helmet": "^5.2.1",
     "react-typography": "^0.16.19",
-    "typography": "^0.16.19"
+    "typography": "^0.16.19",
+    "react-lifecycles-compat": "3.0.4"
   },
   "devDependencies": {
     "prettier": "^1.18.2"
