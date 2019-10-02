@@ -212,11 +212,3 @@
     @extend .aspect-ratio-img;
   }
 }
-
-.aspect-ratio-container-33-35 {
-  @extend %aspect-ratio-container-styles;
-  padding-bottom: 106%;
-  img {
-    @extend .aspect-ratio-img;
-  }
-}

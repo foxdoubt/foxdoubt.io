@@ -5,7 +5,7 @@ const Bio = ({ nametag, leadline, avatarSrc = avatar }) => {
   return (
     <div className='flex profile sm-margin-sides'>
       <div className='avatar-container'>
-        <div className='aspect-ratio-container-33-35 bg-desert-sky-dusk'>
+        <div className='aspect-ratio-container-1-1 bg-desert-sky-dusk'>
           <img className='avatar' src={avatar} alt='Dan DeWald avatar' />
         </div>
       </div>
