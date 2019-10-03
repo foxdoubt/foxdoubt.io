@@ -1,0 +1,65 @@
+// prism solarize light overrides for WCAG 'AAA' accessibility
+$code-blue-1: #1f3a93;
+$code-blue-2: #005051;
+$code-terrible-blue: #0000e0;
+
+$code-green-1: #005500;
+
+$code-violet: #8b008b;
+$code-reddish-1: #7d314c;
+$color-reddish-2: #803224;
+
+$code-terrible-1: #634806;
+
+$code-gray-1: #3e3e3e;
+$code-gray-2: #545454;
+
+pre[class*="language-"],
+:not(pre) {
+  code {
+    &.language {
+      &-css,
+      &-html,
+      &-jsx,
+      &-javascript,
+      &-scss,
+      &-text {
+        color: $code-gray-1;
+      }
+    }
+  }
+  .token {
+    &.selector,
+    &.attr-name,
+    &.number {
+      color: $code-blue-1;
+    }
+    &.property,
+    &.tag {
+      color: $code-blue-2;
+    }
+    &.punctuation {
+      color: $code-gray-1;
+    }
+    &.comment {
+      color: $code-gray-2;
+    }
+    &.string {
+      color: $code-green-1;
+    }
+    &.keyword,
+    &.variable {
+      color: $code-reddish-1;
+      font-weight: bold;
+    }
+    &.class-name {
+      color: $code-violet;
+    }
+    &.function,
+    &.rule,
+    &.attr-value {
+      color: $code-terrible-1;
+      font-weight: bold;
+    }
+  }
+}

@@ -7,7 +7,7 @@ featuredGif: './frinkiac.gif'
 featuredGifAspectRatio: '4:3'
 ---
 
-At work, I stepped away from developing for the browser for about a year. When I came back to it recently (to build this blog), I was surprised by how rapidly the frontend community had adopted CSS-in-JS techniques. By CSS-in-JS, I'm not talking about inlining chunks of CSS in the document `head` as part of your build process, but rather those techniques that champion the inlining of style logic inside React components, while largely ignoring the power of CSS globality, i.e., the cascade.
+At work, I stepped away from developing for the browser for about a year. When I came back to it recently (to build this blog), I was surprised by how rapidly the frontend community had adopted CSS-in-JS techniques. By CSS-in-JS, I'm not talking about inlining chunks of CSS in the document `html≥head` as part of your build process, but rather those techniques that champion the inlining of style logic inside React components, while largely ignoring the power of CSS globality, i.e., the cascade.
 
 There's a sense that CSS-in-JS is the right way to do CSS now, but I've been having trouble getting on board. It feels wrong to me to mainstream a design approach that begins with the premise that entangling CSS with application logic is okay and good. Five years ago, the general consensus was the opposite. Inline CSS was considered the very definition of hard-coding in frontend development. Folks have tried to sell me that React composability changes this earlier paradigm, but I'm not convinced. Making my computer apply dumb styles to elements very quickly doesn't make the underlying CSS any smarter.
 
