@@ -8,12 +8,12 @@ import SEO from '../components/seo';
 class BlogIndex extends React.Component {
   render() {
     const { data } = this.props;
-    const { author: nametag, leadline } = data.site.siteMetadata;
+    const { author: nametag, leadline, description } = data.site.siteMetadata;
     const bioBlurbHtml = data.file.childMarkdownRemark.html;
 
     return (
       <Layout location={this.props.location}>
-        <SEO title='All posts' />
+        <SEO title='All posts' description={description} />
         <Bio {...{ leadline, nametag }} />
         <div
           className='content-container padding-sm'
@@ -32,6 +32,7 @@ export const pageQuery = graphql`
       siteMetadata {
         leadline
         author
+        description
       }
     }
     file(name: { in: "bio-blurb" }) {

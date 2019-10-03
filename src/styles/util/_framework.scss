@@ -23,8 +23,8 @@
   &-ice-blue {
     background-color: $ice-blue;
   }
-  &-desert-sky-dusk {
-    background-color: $desert-sky-dusk;
+  &-desert-sky-dawn {
+    background-color: $desert-sky-dawn;
   }
 }
 
@@ -105,7 +105,7 @@
 }
 
 .blue-underline {
-  border-bottom: 3px solid $desert-sky-dusk;
+  border-bottom: 3px solid $desert-sky-dawn;
 }
 
 .article-title {
@@ -174,7 +174,7 @@
 
 .block-quote,
 .block-quote-container {
-  color: $light-gray;
+  color: $gray;
 }
 
 .capitalize {

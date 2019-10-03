@@ -1,7 +1,7 @@
 ---
 title: Smart Techniques, Dumb CSS
 date: '2019-09-22T19:21:59.819Z'
-description: 'CSS with pre and post processors is still powerful and elegant in the global scope. Its okay not to jam your styles into components with JavaScript'
+description: "CSS with pre and post processors is still powerful and elegant in the global scope. It's okay not to jam your styles into components with JavaScript"
 featuredImage: './frinkiac-first-frame.png'
 featuredGif: './frinkiac.gif'
 featuredGifAspectRatio: '4:3'
@@ -17,7 +17,7 @@ The arguments for a separate and distinct presentation layer as the gold standar
 
 <h4 class="blog-subtitle uppercase bold">css modules</h4>
 
-<a rel="noreferrer"  href="https://github.com/css-modules/css-modules" target=_blank>CSS Modules</a> is perhaps the least egregious CSS-in-JS technique because it only mixes selector names into your components, not actual styles. It works by creating a `.module.css` file, which lives side by side with the React component that's importing it:
+<a class="bold" rel="noreferrer"  href="https://github.com/css-modules/css-modules" target=_blank>CSS Modules</a> is perhaps the least egregious CSS-in-JS technique because it only mixes selector names into your components, not actual styles. It works by creating a `.module.css` file, which lives side by side with the React component that's importing it:
 
 ```css
 /* bio.module.css */
@@ -88,7 +88,7 @@ Another headache of CSS Modules is that there's no clear mapping between your ma
 
 <h4 class="blog-subtitle uppercase bold">styled components and emotion</h4>
 
-I'll admit I am damn smitten by how sleek the <a rel="noreferrer"  href="https://www.styled-components.com/" target=_blank>Styled Components</a> and <a rel="noreferrer"  href="https://emotion.sh/docs/introduction" target=_blank>Emotion</a> APIs are. The use of tagged template literals and the terse and self-explanatory syntax for composing style-injected components is worth getting excited about. However, they still encourage developers to write dumb CSS.
+I'll admit I am damn smitten by how sleek the <a class="bold" rel="noreferrer"  href="https://www.styled-components.com/" target=_blank>Styled Components</a> and <a class="bold" rel="noreferrer"  href="https://emotion.sh/docs/introduction" target=_blank>Emotion</a> APIs are. The use of tagged template literals and the terse and self-explanatory syntax for composing style-injected components is worth getting excited about. However, they still encourage developers to write dumb CSS.
 
 I'll spare an example using Styled Components, because that API works basically the same way as `@emotion/styled` does:
 
@@ -160,7 +160,7 @@ I'm impressed by the smartness of this approach and appreciate the vendor prefix
 
 <h4 class="blog-subtitle uppercase bold">JSS</h4>
 
-What's cool about <a rel="noreferrer"  href="https://cssinjs.org" target=_blank>JSS</a> is that it considers the available styling options out there, e.g, Sass, PostCSS, Styled Components, etc., and tries to integrate as much of their functionalities as it can via an impressive plugin ecosystem. Also, I found their <a rel="noreferrer"  href="https://cssinjs.org/from-sass-to-cssinjs" target=_blank>From Sass to CSS-in-JS</a> presentation very cool and thought-provoking.
+What's cool about <a class="bold" rel="noreferrer"  href="https://cssinjs.org" target=_blank>JSS</a> is that it considers the available styling options out there, e.g, Sass, PostCSS, Styled Components, etc., and tries to integrate as much of their functionalities as it can via an impressive plugin ecosystem. Also, I found their <a class="bold" rel="noreferrer"  href="https://cssinjs.org/from-sass-to-cssinjs" target=_blank>From Sass to CSS-in-JS</a> presentation very cool and thought-provoking.
 
 The API is quite extensive, but the gist is that you write styles in plain JavaScript and inject them into your React components with `createUseStyles` from `react-jss`:
 
@@ -222,7 +222,7 @@ And the markup itself:
 
 #### **What's the problem?**
 
-Consider these more true-to-life examples of how you might use JSS from <a rel="noreferrer"  href="https://cssinjs.org/react-jss#basic" target=_blank>their docs</a>:
+Consider these more true-to-life examples of how you might use JSS from <a class="bold" rel="noreferrer"  href="https://cssinjs.org/react-jss#basic" target=_blank>their docs</a>:
 
 ```javascript
 const useStyles = createUseStyles({
@@ -246,7 +246,7 @@ const useStyles = createUseStyles({
 });
 ```
 
-or worse, <a rel="noreferrer"  href="https://cssinjs.org/jss-syntax?v=v10.0.0#media-queries" target=_blank>this one</a>:
+or worse, <a class="bold" rel="noreferrer"  href="https://cssinjs.org/jss-syntax?v=v10.0.0#media-queries" target=_blank>this one</a>:
 
 ```javascript
 const styles = {
@@ -261,7 +261,7 @@ const styles = {
 };
 ```
 
-Or possibly even worse, <a rel="noreferrer"  href="https://cssinjs.org/jss-syntax?v=v10.0.0#comma-separated-values" target=_blank>this</a>:
+Or possibly even worse, <a class="bold" rel="noreferrer"  href="https://cssinjs.org/jss-syntax?v=v10.0.0#comma-separated-values" target=_blank>this</a>:
 
 ```javascript
 const styles = {
