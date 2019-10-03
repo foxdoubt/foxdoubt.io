@@ -3,6 +3,7 @@ import Typography from 'typography';
 const foxDoubtTheme = new Typography({
   baseFontSize: '16px',
   baseLineHeight: 1.65,
+  fontDisplay: 'swap',
   googleFonts: [
     {
       name: 'Open Sans',
