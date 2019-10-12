@@ -1,13 +1,13 @@
 ---
 title: Smart Techniques, Dumb CSS
 date: '2019-09-22T19:21:59.819Z'
-description: 'CSS with pre and post processors is still powerful and elegant in the global scope. Its okay not to jam your styles into components with JavaScript'
+description: "CSS with pre and post processors is still powerful and elegant in the global scope. It's okay not to jam your styles into components with JavaScript"
 featuredImage: './frinkiac-first-frame.png'
 featuredGif: './frinkiac.gif'
 featuredGifAspectRatio: '4:3'
 ---
 
-At work, I stepped away from developing for the browser for about a year. When I came back to it recently (to build this blog), I was surprised by how rapidly the frontend community had adopted CSS-in-JS techniques. By CSS-in-JS, I'm not talking about inlining chunks of CSS in the document `head` as part of your build process, but rather those techniques that champion the inlining of style logic inside React components, while largely ignoring the power of CSS globality, i.e., the cascade.
+At work, I stepped away from developing for the browser for about a year. When I came back to it recently (to build this blog), I was surprised by how rapidly the frontend community had adopted CSS-in-JS techniques. By CSS-in-JS, I'm not talking about inlining chunks of CSS in the document `html≥head` as part of your build process, but rather those techniques that champion the inlining of style logic inside React components, while largely ignoring the power of CSS globality, i.e., the cascade.
 
 There's a sense that CSS-in-JS is the right way to do CSS now, but I've been having trouble getting on board. It feels wrong to me to mainstream a design approach that begins with the premise that entangling CSS with application logic is okay and good. Five years ago, the general consensus was the opposite. Inline CSS was considered the very definition of hard-coding in frontend development. Folks have tried to sell me that React composability changes this earlier paradigm, but I'm not convinced. Making my computer apply dumb styles to elements very quickly doesn't make the underlying CSS any smarter.
 
@@ -15,9 +15,9 @@ The arguments for a separate and distinct presentation layer as the gold standar
 
 ### Quick Overview of Some Common CSS-in-JS techniques
 
-<h4 class="blog-subtitle uppercase bold">css modules</h4>
+<h4 class="blog-subtitle uppercase bold">css modules <a class="lowercase normal underline" rel="noreferrer"  href="https://github.com/css-modules/css-modules" target=_blank>| read the docs here</a></h4>
 
-<a href="https://github.com/css-modules/css-modules" target=_blank>CSS Modules</a> is perhaps the least egregious CSS-in-JS technique because it only mixes selector names into your components, not actual styles. It works by creating a `.module.css` file, which lives side by side with the React component that's importing it:
+is perhaps the least egregious CSS-in-JS technique because it only mixes selector names into your components, not actual styles. It works by creating a `.module.css` file, which lives side by side with the React component that's importing it:
 
 ```css
 /* bio.module.css */
@@ -87,8 +87,9 @@ CSS Modules assumes component styles are truly isolated, which usually doesn't r
 Another headache of CSS Modules is that there's no clear mapping between your markup and your JSX when you pop open dev tools to look at your app under the hood. While the JSX references raw class selectors from your `.module.css` file, those values won't match the rendered class names in the DOM, so it's your brain that gets to parse out all those dashes and hashes to determine which `div` got the "container" class. Good luck!
 
 <h4 class="blog-subtitle uppercase bold">styled components and emotion</h4>
+<a rel="noreferrer"  href="https://www.styled-components.com/" target=_blank>read Styled Component docs</a> | <a rel="noreferrer"  href="https://emotion.sh/docs/introduction" target=_blank>read Emotion docs</a>
 
-I'll admit I am damn smitten by how sleek the <a href="https://www.styled-components.com/" target=_blank>Styled Components</a> and <a href="https://emotion.sh/docs/introduction" target=_blank>Emotion</a> APIs are. The use of tagged template literals and the terse and self-explanatory syntax for composing style-injected components is worth getting excited about. However, they still encourage developers to write dumb CSS.
+I'll admit I am damn smitten by how sleek the Styled Components and Emotion APIs are. The use of tagged template literals and the terse and self-explanatory syntax for composing style-injected components is worth getting excited about. However, they still encourage developers to write dumb CSS.
 
 I'll spare an example using Styled Components, because that API works basically the same way as `@emotion/styled` does:
 
@@ -158,9 +159,9 @@ And markup that looks like this:
 
 I'm impressed by the smartness of this approach and appreciate the vendor prefixing for the `Container` class. But I can't picture how I'd use this technique to organize a higher level presentation layer without adding a ton of logic in JavaScript. Even in its simplest form, Emotion/Styled Components code deeply couples an app's design with its functionality.
 
-<h4 class="blog-subtitle uppercase bold">JSS</h4>
+<h4 class="blog-subtitle uppercase bold">JSS | <a class="lowercase normal" rel="noreferrer"  href="https://cssinjs.org" target=_blank>read <span class="uppercase">JSS</span> docs</a></h4>
 
-What's cool about <a href="https://cssinjs.org" target=_blank>JSS</a> is that it considers the available styling options out there, e.g, Sass, PostCSS, Styled Components, etc., and tries to integrate as much of their functionalities as it can via an impressive plugin ecosystem. Also, I found their <a href="https://cssinjs.org/from-sass-to-cssinjs" target=_blank>From Sass to CSS-in-JS</a> presentation very cool and thought-provoking.
+What's cool about JSS is that it considers the available styling options out there, e.g, Sass, PostCSS, Styled Components, etc., and tries to integrate as much of their functionalities as it can via an impressive plugin ecosystem. Also, I found their _From Sass to CSS-in-JS_ presentation very cool and thought-provoking. <a class="bold" rel="noreferrer"  href="https://cssinjs.org/from-sass-to-cssinjs" target=_blank>Click here to watch it.</a>
 
 The API is quite extensive, but the gist is that you write styles in plain JavaScript and inject them into your React components with `createUseStyles` from `react-jss`:
 
@@ -222,9 +223,11 @@ And the markup itself:
 
 #### **What's the problem?**
 
-Consider these more true-to-life examples of how you might use JSS from <a href="https://cssinjs.org/react-jss#basic" target=_blank>their docs</a>:
+Consider these more true-to-life examples of how you might use JSS from their docs:
 
 ```javascript
+// https://cssinjs.org/react-jss#basic"
+
 const useStyles = createUseStyles({
   myButton: {
     color: 'green',
@@ -246,9 +249,11 @@ const useStyles = createUseStyles({
 });
 ```
 
-or worse, <a href="https://cssinjs.org/jss-syntax?v=v10.0.0#media-queries" target=_blank>this one</a>:
+or worse, this one:
 
 ```javascript
+// https://cssinjs.org/jss-syntax?v=v10.0.0#media-queries
+
 const styles = {
   button: {
     width: 100
@@ -261,9 +266,11 @@ const styles = {
 };
 ```
 
-Or possibly even worse, <a href="https://cssinjs.org/jss-syntax?v=v10.0.0#comma-separated-values" target=_blank>this</a>:
+Or possibly even worse, this:
 
 ```javascript
+// https://cssinjs.org/jss-syntax?v=v10.0.0#comma-separated-values
+
 const styles = {
   button: {
     // Comma separated value with space separated values inside.

@@ -2,9 +2,9 @@ module.exports = {
   siteMetadata: {
     title: `foxdoubt`,
     author: `Dan DeWald`,
-    description: ``,
+    description: `Learn and gain insights from this creative engineering blog with a focus on thinking in JavaScript`,
     leadline: `creative, unconventional thinker`,
-    siteUrl: `https://gatsby-starter-blog-demo.netlify.com/`,
+    siteUrl: `https://foxdoubt.com/`,
     social: {
       twitter: `foxdoubt`
     },
@@ -51,7 +51,7 @@ module.exports = {
               // stripping.
               // A suggested value for English speakers is the non-ascii
               // character '›'.
-              inlineCodeMarker: null,
+              inlineCodeMarker: '≥',
               // This lets you set up language aliases.  For example,
               // setting this to '{ sh: "bash" }' will let you use
               // the language "sh" which will highlight using the

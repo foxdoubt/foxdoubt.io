@@ -6,6 +6,7 @@
 @import "./util/framework";
 @import "./util/icons";
 @import "./util/animations";
+@import "./util/overrides";
 
 * {
   box-sizing: border-box;
@@ -72,7 +73,7 @@ img {
 }
 
 .timestamp {
-  color: $light-gray;
+  color: $gray;
   text-transform: uppercase;
   margin: $content-space-xs 0;
   & + .byline {
