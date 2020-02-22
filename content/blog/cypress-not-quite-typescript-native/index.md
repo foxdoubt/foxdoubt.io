@@ -9,11 +9,11 @@ featuredGifAspectRatio: '4:3'
 
 Cypress is a promising arrival to the world of end-to-end testing. Its accessible documentation makes it easy to get started writing tests with more than just a superficial understanding. Plus, it has an incredibly flexible, extensible API, and an intuitive assertions library built on <a href="https://mochajs.org" target=_blank>Mocha</a> and <a href="https://sinonjs.org/" target=_blank>Sinon</a>.
 
-For all its virtues, however, Cypress is surprisingly weak when it comes to TypeScript support. While test files and commands can be written in TypeScript with minimal effort, currently there is no support for Cypress plugins. This is disappointing for anyone looking to use Cypress to test an existing TypeScript application. Luckily there's a pretty painless workaround, using `ts-node`. [Click here to go right to the solution](#the-problem), or read on for more context!
+For all its virtues, however, Cypress is surprisingly weak when it comes to TypeScript support. While test files and commands can be written in TypeScript with minimal effort, currently there is no support for Cypress <a href="https://docs.cypress.io/guides/tooling/plugins-guide.html" target=_blank>plugins</a>. This is disappointing for anyone hoping to directly import TypeScript modules from their app into their Cypress code. Luckily there's a pretty painless workaround, using `ts-node`. [Click here to go right to the solution](#the-problem), or read on for more context!
 
 ### The Plugins API
 
-In Cypress, plugins provide a connection between the browser context where your tests are run and the platform's underlying Node process. Tasks are an especially powerful feature of plugins. With tasks, you provide a task name and JSON serialize-able arguments to a custom Node function, and Cypress will execute your code and return the results back to the browser. This is a perfect tool for something like seeding your test database and is in fact the preferred method for doing so <a href="https://docs.cypress.io/api/commands/task.html#Command" target=_blank>according to the Cypress docs</a>.
+In Cypress, plugins provide a connection between the browser context where your tests are run and the platform's underlying Node process. <a href="https://docs.cypress.io/api/commands/task.html" target=_blank>Tasks</a> are an especially powerful feature of plugins. With tasks, you provide a task name and JSON serialize-able arguments to a custom Node function, and Cypress will execute your code and return the results back to the browser. This is a perfect tool for something like seeding your test database and is in fact the preferred method for doing so <a href="https://docs.cypress.io/api/commands/task.html#Command" target=_blank>according to the Cypress docs</a>.
 
 For illustration purposes, imagine an incredibly simple application that's able to generate a user profile:
 
@@ -91,7 +91,7 @@ describe('user', () => {
 });
 ```
 
-Next you'd register the "seed" task like so:
+Next, you could register the `'seed'` task like so:
 
 ```javascript
 // cypress/plugins/index.js
@@ -99,7 +99,6 @@ Next you'd register the "seed" task like so:
 const { seedTestDb, tearDownDb } = require('./task-helpers');
 
 module.exports = on => {
-  // other plugins...
   on('task', {
     seed(input) {
       return seedTestDb(input);
@@ -146,7 +145,7 @@ export const tearDownDb = async () => {
 
 <h3 class="blog-subtitle" id="the-problem">The Problem</h3>
 
-What if your app already contains great functions that you want to use in these helpers rather than writing them from scratch? Because you cannot import TypeScript modules for use in your tasks, you're out of luck. One solution would be to have a separate build step that runs before `cypress` which transpiles your TypeScript into JavaScript and saves it to some output location, then `require` the code from there. But that would be an inconvenient and error prone dependency. Luckily, there's `ts-node`, which exports a function `register` for transpiling TypeScript modules in Node:
+What if your TypeScript app already contains great functions that you want to use in these helpers rather than writing them from scratch? Because you cannot import TypeScript modules for use in your tasks, you're out of luck. One solution would be to have a separate build step run before `cypress` which transpiles your TypeScript into JavaScript and saves it to an output location, then `require` the code from there. But that would be an inconvenient and error prone dependency. Luckily, there's `ts-node`, which exports a function `register` for transpiling TypeScript modules in Node:
 
 ```javascript
 // cypress/plugins/index.js
@@ -178,25 +177,20 @@ Using `register` opens up the entire world of your TypeScript application for us
 ```typescript
 // cypress/plugins/task-helpers.ts
 
-import User from '../../src/models/user';
-import { connect } from '../../src/server/db';
+import User from '../../src/server/models/user';
+import { createConnection } from '../../src/server/db';
 
-interface ICreateUserInput {
-  firstName: string;
-  lastName: string;
-  emailAddress: string;
+interface ISeedTestDbInput {
+  users: Array<{ firstName: string; lastName: string; emailAddress: string }>;
 }
 
-export interface ICreateUserOutput {
+export interface ISeedTestDbOutput {
   allUsers: User[];
 }
 
-const createConnection = async () => {
-  // establish connection with your app's
-  // DB driver if one does not already exist
-};
-
-export const seedTestDb = async input => {
+export const seedTestDb = async (
+  input: ISeedTestDbInput
+): Promise<ISeedTestDbOutput> => {
   await createConnection();
   let allUsers = [];
   if (input.users && input.users.length) {
@@ -215,7 +209,9 @@ export const tearDownDb = async () => {
 };
 ```
 
-Unfortunately, there is no way to easily maintain type support in the test file itself. Ideally, extending the Cypress `then` function type in a custom declaration file to accept a generic would probably be the most correct way to get around this. Like so:
+By `import`ing `createConnection` and the `User` class directly from our TypeScript app, we're able to practice good programming, repurposing existing TypeScript code rather than writing new (and invariably worse) Node functions.
+
+Unfortunately, there is no way to easily maintain type support in the test file itself. Ideally, extending the Cypress `then` function type in a custom declaration file to accept a generic would probably be the most correct way to get around that problem. <a href="https://docs.cypress.io/guides/tooling/typescript-support.html#Types-for-custom-commands" target=_blank>This is similar to the approach recommended by the Cypress docs for typing custom commands</a>:
 
 ```typescript
 // cypress/cypress-types.d.ts
@@ -223,8 +219,7 @@ Unfortunately, there is no way to easily maintain type support in the test file 
 declare module 'cypress-types' {
   global {
     interface Chainable<Subject> {
-      // TODO FINISH THIS
-      then<T>();
+      then<T>(fn: (result: T) => any): Chainable<Subject>;
       // ...
     }
   }
@@ -232,12 +227,12 @@ declare module 'cypress-types' {
 }
 ```
 
-However, this ends up generating type issues that are beyond the scope of this post to untangle! Here's an adequate work-around. We cast the result returned from the `seed` task as `unknown` then to `ICreateUserOutput`.
+However, trying to create an overflow definition for `then` ends up generating type issues that are beyond the scope of this post to untangle! Here's an adequate work-around. We cast the result returned from the `seed` task as `unknown` then to `ISeedTestDbOutput`.
 
 ```typescript
 // cypress/integration/user.ts
 
-import { ICreateUserOutput } from '../plugins/task-helpers';
+import { ISeedTestDbOutput } from '../plugins/task-helpers';
 
 const seedData = [
   {
@@ -255,7 +250,7 @@ const seedData = [
 describe('user', () => {
   before(() => {
     cy.task('seed', seedData).then(seedResult => {
-      const { users } = (seedResult as unknown) as ICreateUserOutput;
+      const { allUsers } = (seedResult as unknown) as ISeedTestDbOutput;
       this.user1Id = users[0].id;
     });
   });
