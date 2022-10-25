@@ -116,7 +116,7 @@
     position: fixed;
     bottom: 0;
     width: 100%;
-    height: ($footer-height / 2);
+    height: calc($footer-height / 2);
     background-color: $desert-sand;
     @include tablet {
       position: initial;
