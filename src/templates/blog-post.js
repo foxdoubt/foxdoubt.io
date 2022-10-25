@@ -2,7 +2,7 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import Layout from '../components/layout/layout';
 import SEO from '../components/seo';
-import Img from 'gatsby-image';
+import { GatsbyImage } from 'gatsby-plugin-image';
 import { getAspectRatio } from '../utils/helpers/data-parsing';
 
 const GifPlayer = React.lazy(() => import('../vendor/react-gif-player'));
@@ -49,7 +49,7 @@ class BlogPostTemplate extends React.Component {
     } else {
       leadArtHtml = (
         <div className='sm-margin-sides sm-margin-bottom'>
-          <Img fluid={post.frontmatter.featuredImage.childImageSharp.fluid} />
+          <GatsbyImage src={post.frontmatter.featuredImage.childImageSharp.fluid} />
         </div>
       );
     }
